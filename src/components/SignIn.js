@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Image,
@@ -14,9 +14,71 @@ import {
   useIsFocused,
   useNavigation,
 } from "@react-navigation/native";
+import { LOGIN } from "../constants/api";
 
 function SignIn({ route }) {
   const navigation = useNavigation();
+
+  const isSpecialCharacter = (str) =>
+    /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(str);
+  const isEmpty = (str) => str.trim() === "";
+
+  const [login, setLogin] = useState({
+    username: "",
+    password: "",
+  });
+
+  const [errors, setErrors] = useState({
+    username: "",
+    password: "",
+  });
+
+  const inputChangedHandler = (field, value) => {
+    setLogin((preState) => ({
+      ...preState,
+      [field]: value,
+    }));
+    setErrors((prevState) => ({
+      ...prevState,
+      [field]: value,
+    }));
+  };
+
+  function HandleSubmit() {
+    const loginUser = async () => {
+      try {
+        const response = await fetch(LOGIN, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(login),
+        });
+        const data = await response.json();
+        console.log("Login successfully:", data);
+
+        if (!response.ok) {
+          throw new Error("Failed to register user");
+        }
+      } catch (error) {
+        console.error("Error login user:", error);
+      }
+    };
+    loginUser();
+    console.log("login :", login);
+  }
+
+  function NavigateToAdmin() {
+    navigation.navigate("AdminOverView");
+  }
+
+  function NavigateToStaff() {
+    navigation.navigate("StaffOverView");
+  }
+
+  function NavigateToUser() {
+    navigation.navigate("UserOverView");
+  }
 
   return (
     <ImageBackground
@@ -29,14 +91,18 @@ function SignIn({ route }) {
           style={styles.input}
           placeholder="Username"
           placeholderTextColor="#fff"
+          value={login.username}
+          onChangeText={inputChangedHandler.bind(this, "username")}
         />
         <TextInput
           style={styles.input}
           placeholder="Password"
           placeholderTextColor="#fff"
+          value={login.password}
+          onChangeText={inputChangedHandler.bind(this, "password")}
           secureTextEntry
         />
-        <Button color="#F5BD02" title="Sign in" onPress={() => {}} />
+        <Button color="#F5BD02" title="Sign in" onPress={NavigateToUser} />
         <View style={styles.signUpContainer}>
           <Text style={styles.signUpText}>You do not have an account? </Text>
           <Pressable onPress={() => navigation.navigate("SignUp")}>

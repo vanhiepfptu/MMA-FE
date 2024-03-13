@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -7,58 +7,160 @@ import {
   StyleSheet,
   ImageBackground,
   Pressable,
+  ScrollView,
 } from "react-native";
 import {
   useFocusEffect,
   useIsFocused,
   useNavigation,
 } from "@react-navigation/native";
+import { REGISTER } from "../constants/api";
 
 function SignUp({}) {
   const navigation = useNavigation();
+
+  const [register, setRegister] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    dateOfBirth: "",
+    address: "",
+    phone: "",
+    username: "",
+    password: "",
+  });
+
+  const [confirmPw, setConfirmPw] = useState("");
+
+  const inputChangedHandler = (field, value) => {
+    setRegister((prevState) => ({
+      ...prevState,
+      [field]: value,
+    }));
+  };
+
+  const HandleSubmit = () => {
+    if (register?.password === confirmPw) {
+      const registerNewUser = async () => {
+        try {
+          const response = await fetch(REGISTER, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(register),
+          });
+          if (!response.ok) {
+            throw new Error("Failed to register user");
+          }
+          const data = await response.json();
+          console.log("Registration successfully:", data);
+        } catch (error) {
+          console.error("Error registering user:", error);
+        }
+      };
+      registerNewUser();
+    }
+    console.log("register :", register);
+  };
+
   return (
-    <ImageBackground
-      source={require("../images/Background_SignUp.jpg")}
-      style={styles.background}
-    >
-      <View style={styles.container}>
-        <Text style={styles.title}>Sign Up</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Username"
-          placeholderTextColor="#fff"
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          placeholderTextColor="#fff"
-          secureTextEntry
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Re-enter Password"
-          placeholderTextColor="#fff"
-          secureTextEntry
-        />
-        <Button color="#F5BD02" title="Register" onPress={() => {}} />
-        <View style={styles.signUpContainer}>
-          <Text style={styles.signUpText}>You already have account? </Text>
-          <Pressable onPress={() => navigation.navigate("SignIn")}>
-            {({ pressed }) => (
-              <Text
-                style={[
-                  styles.signUpText,
-                  styles.signUpButtonText,
-                  pressed && styles.pressed,
-                ]}
-              >
-                Sign in here
-              </Text>
-            )}
-          </Pressable>
+    <ScrollView style={styles.scrollView}>
+      <ImageBackground
+        source={require("../images/Background_SignUp.jpg")}
+        style={styles.background}
+      >
+        <View style={styles.container}>
+          <Text style={styles.title}>Sign Up</Text>
+          <View style={styles.nameContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder="Firstname"
+              placeholderTextColor="#fff"
+              value={register.firstName}
+              onChangeText={inputChangedHandler.bind(this, "firstName")}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Lastname"
+              placeholderTextColor="#fff"
+              value={register.lastName}
+              onChangeText={inputChangedHandler.bind(this, "lastName")}
+            />
+          </View>
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            placeholderTextColor="#fff"
+            value={register.email}
+            onChangeText={inputChangedHandler.bind(this, "email")}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Date Of Birth"
+            placeholderTextColor="#fff"
+            value={register.dateOfBirth}
+            onChangeText={inputChangedHandler.bind(this, "dateOfBirth")}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Phone number"
+            placeholderTextColor="#fff"
+            value={register.phone}
+            onChangeText={inputChangedHandler.bind(this, "phone")}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Address"
+            placeholderTextColor="#fff"
+            value={register.address}
+            onChangeText={inputChangedHandler.bind(this, "address")}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Username"
+            placeholderTextColor="#fff"
+            value={register.username}
+            onChangeText={inputChangedHandler.bind(this, "username")}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            placeholderTextColor="#fff"
+            value={register.password}
+            onChangeText={inputChangedHandler.bind(this, "password")}
+            secureTextEntry
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Re-enter Password"
+            placeholderTextColor="#fff"
+            value={confirmPw}
+            onChangeText={(value) => {
+              setConfirmPw(value);
+            }}
+            secureTextEntry
+          />
+          <Button color="#F5BD02" title="Register" onPress={HandleSubmit} />
+          <View style={styles.signUpContainer}>
+            <Text style={styles.signUpText}>You already have account? </Text>
+            <Pressable onPress={() => navigation.navigate("SignIn")}>
+              {({ pressed }) => (
+                <Text
+                  style={[
+                    styles.signUpText,
+                    styles.signUpButtonText,
+                    pressed && styles.pressed,
+                  ]}
+                >
+                  Sign in here
+                </Text>
+              )}
+            </Pressable>
+          </View>
         </View>
-      </View>
-    </ImageBackground>
+      </ImageBackground>
+    </ScrollView>
   );
 }
 
@@ -66,10 +168,11 @@ export default SignUp;
 
 const styles = StyleSheet.create({
   background: {
-    flex: 1,
+    //flex: 1,
     alignItems: "center",
     justifyContent: "center",
     opacity: 0.86,
+    //height: "100%",
   },
   container: {
     width: "80%",
@@ -77,6 +180,14 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#AB2330",
     borderRadius: 10,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  nameContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   title: {
     fontSize: 28,
@@ -87,7 +198,7 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: "rgba(255,255,255,0.7)",
-    paddingHorizontal: 15,
+    paddingHorizontal: 25,
     paddingVertical: 10,
     borderRadius: 4,
     marginBottom: 10,
