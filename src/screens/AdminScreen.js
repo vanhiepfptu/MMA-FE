@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, TextInput, Button, StyleSheet } from "react-native";
 import { Picker } from '@react-native-picker/picker';
+import { TouchableOpacity } from 'react-native';
+import ManageProduct from "./ManageProduct";
+import { useNavigation } from '@react-navigation/native';
+
 
 function AdminScreen() {
   const [productName, setProductName] = useState("");
@@ -12,6 +16,11 @@ function AdminScreen() {
   const [productQuantity, setProductQuantity] = useState("");
   const [productMaterial, setProductMaterial] = useState("");
   const [productDescription, setProductDescription] = useState("");
+
+  const navigation = useNavigation();
+  const navigateToManageProduct = () => {
+    navigation.navigate('ManageProduct');
+  };
 
   useEffect(() => {
     const today = new Date();
@@ -67,16 +76,16 @@ function AdminScreen() {
 
   return (
     <View style={styles.container}>
-      <Text>Import New Product</Text>
+      <Text style={styles.big_title}>Import New Product</Text>
       <TextInput placeholder="Product Name" value={productName} onChangeText={setProductName} style={styles.input} />
       <TextInput placeholder="Product Price" value={productPrice} onChangeText={handlePriceChange} style={styles.input} keyboardType="numeric" />
       <TextInput placeholder="Imagelink" value={productImage} onChangeText={setProductImage} style={styles.input} />
       <TextInput placeholder="Product Size" value={productSize} onChangeText={setProductSize} style={styles.input} />
-      
+
       <TextInput placeholder="Product Quantity" value={productQuantity} onChangeText={handleQuantityChange} style={styles.input} keyboardType="numeric" />
       <TextInput placeholder="Product Material" value={productMaterial} onChangeText={setProductMaterial} style={styles.input} />
       <TextInput placeholder="Product Description" value={productDescription} onChangeText={setProductDescription} style={styles.input} multiline />
-      
+
       <Picker
         selectedValue={productType}
         onValueChange={(itemValue, itemIndex) => setProductType(itemValue)}
@@ -88,10 +97,16 @@ function AdminScreen() {
         <Picker.Item label="Chair" value="Chair" />
       </Picker>
       <Text>Date Import: {dateImport}</Text>
-      <Button title="Submit" onPress={handleSubmit} />
-      
+      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+        <Text style={styles.buttonText}>Submit</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.button} onPress={navigateToManageProduct}>
+        <Text style={styles.buttonText}>Manage Products</Text>
+      </TouchableOpacity>
+
     </View>
-    
+
   );
 }
 
@@ -99,6 +114,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+    marginTop: 30,
   },
   input: {
     height: 40,
@@ -107,12 +123,34 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     padding: 10,
     backgroundColor: 'white',
+    borderRadius: 15,
   },
   picker: {
-    height: 20,
-    width: '50%',
-    backgroundColor: 'white',
+    height: 10,
+    width: '30%',
+
   },
+
+  button: {
+    backgroundColor: 'green',
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 10,
+  },
+  buttonText: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 16,
+
+  },
+  big_title: {
+    textAlign: 'center',
+    marginBottom: 20,
+    fontSize: 20,
+    fontWeight: '700',
+    color: "#164863",
+  },
+
 });
 
 export default AdminScreen;
