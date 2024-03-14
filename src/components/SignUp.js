@@ -55,6 +55,17 @@ function SignUp({}) {
           }
           const data = await response.json();
           console.log("Registration successfully:", data);
+          //Reset Register State
+          setRegister({
+            firstName: "",
+            lastName: "",
+            email: "",
+            dateOfBirth: "",
+            address: "",
+            phone: "",
+            username: "",
+            password: "",
+          });
         } catch (error) {
           console.error("Error registering user:", error);
         }
