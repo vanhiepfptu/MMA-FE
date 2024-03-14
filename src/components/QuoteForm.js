@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: "#fff",
-    borderRadius: "5px",
+    // borderRadius: "5px",
     boxShadow: "0 0 5px rgba(#124, 0)",
     overflow: "hidden",
   },
