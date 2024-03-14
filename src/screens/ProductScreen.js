@@ -20,12 +20,16 @@ const ProductScreen = ({ navigation }) => {
   const [filterCategory, setFilterCategory] = useState('');
   const [sortPrice, setSortPrice] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
-  const categories = ['All','Chair', 'Sofa', 'Light'];
+  const categories = ['All', 'Chair', 'Sofa', 'Light', 'Table'];
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
   const handleCategoryPress = (category) => {
     if (category === 'All') {
-      setFilterCategory('');  // Loại bỏ bộ lọc nếu chọn "All"
+      setFilterCategory('');
+      setSelectedCategory(category);// Loại bỏ bộ lọc nếu chọn "All"
     } else {
-      setFilterCategory(category);  // Áp dụng bộ lọc nếu chọn danh mục cụ thể
+      setFilterCategory(category);
+      setSelectedCategory(category);  // Áp dụng bộ lọc nếu chọn danh mục cụ thể
     }
   };
   useEffect(() => {
@@ -54,9 +58,9 @@ const ProductScreen = ({ navigation }) => {
       setLoading(false);
     }
   };
-  const CategoryCard = ({ categoryName, onPress }) => (
-    <TouchableOpacity onPress={onPress} style={styles.categoryCard}>
-      <Text style={styles.categoryText}>{categoryName}</Text>
+  const CategoryCard = ({ categoryName, onPress, isSelected }) => (
+    <TouchableOpacity onPress={onPress} style={[styles.categoryCard, isSelected && styles.selectedCategoryCard]}>
+      <Text style={[styles.categoryText, isSelected && styles.selectedCategoryText]}>{categoryName}</Text>
     </TouchableOpacity>
   );
   const filteredProducts = products
@@ -104,19 +108,23 @@ const ProductScreen = ({ navigation }) => {
             key={category}
             categoryName={category}
             onPress={() => handleCategoryPress(category)}
+            isSelected={selectedCategory === category}
           />
         ))}
       </View>
+      <View style={styles.pickerContainer}>
+        <Picker
+          selectedValue={sortPrice}
+          onValueChange={(itemValue) => setSortPrice(itemValue)}
+          style={styles.picker}
+        >
+          <Picker.Item label="All" value="" />
+          <Picker.Item label="Price: Low to High" value="lowToHigh" />
+          <Picker.Item label="Price: High to Low" value="highToLow" />
+        </Picker>
 
-      <Picker
-        selectedValue={sortPrice}
-        onValueChange={(itemValue) => setSortPrice(itemValue)}
-        style={styles.picker}
-      >
-        <Picker.Item label="Default" value="" />
-        <Picker.Item label="Price: Low to High" value="lowToHigh" />
-        <Picker.Item label="Price: High to Low" value="highToLow" />
-      </Picker>
+      </View>
+
       <FlatList
         data={filteredProducts}
         renderItem={({ item }) => (
@@ -147,6 +155,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 15
   },
+  selectedCategoryCard: {
+    backgroundColor: '#FFA07A', // Màu cam cho card được chọn
+  },
+  selectedCategoryText: {
+    color: '#FFFFFF', // Màu chữ trắng khi được chọn
+  },
   image: {
     width: 100,
     height: 100,
@@ -158,10 +172,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 5,
   },
+  pickerContainer: {
+    alignItems: 'flex-end', // Căn `Picker` về phía bên phải
+    width: '100%', // Chiếm đủ chiều ngang của container cha
+  },
+
   picker: {
     height: 50,
-    width: '50%',
-    alignItems: 'flex-end',
+    width: '30%', // Chiếm 50% chiều ngang của container cha
+    // Không cần `alignItems` ở đây
+    fontSize: 16,
   },
   price: {
     fontSize: 14,
@@ -174,6 +194,9 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     margin: 10,
     borderRadius: 5,
+    backgroundColor: '#FFFFFF', // Màu nền trắng
+    color: '#000000', // Màu chữ đen
+    borderRadius: 10,
   },
   categoryContainer: {
     paddingHorizontal: 10,
@@ -181,16 +204,23 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     justifyContent: "space-between",
+    //flexWrap: 'wrap', // Cho phép các card chuyển xuống dòng nếu không đủ chỗ
   },
+
   categoryCard: {
+    flex: 1,
     padding: 10,
     backgroundColor: '#f8f8f8',
     borderRadius: 5,
     borderWidth: 1,
     borderColor: '#ddd',
+    marginHorizontal: 5,
+    justifyContent: 'center', // Căn giữa nội dung theo trục dọc
+    alignItems: 'center', // Căn giữa nội dung theo trục ngang
+    borderRadius: 10,
   },
   categoryText: { fontSize: 16, color: "grey", fontWeight: "bold" },
-  
+
 });
 
 export default ProductScreen;

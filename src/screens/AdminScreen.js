@@ -1,11 +1,118 @@
-import { Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Text, View, TextInput, Button, StyleSheet } from "react-native";
+import { Picker } from '@react-native-picker/picker';
 
 function AdminScreen() {
+  const [productName, setProductName] = useState("");
+  const [productPrice, setProductPrice] = useState("");
+  const [productImage, setProductImage] = useState("");
+  const [productSize, setProductSize] = useState("");
+  const [productType, setProductType] = useState("");
+  const [dateImport, setDateImport] = useState("");
+  const [productQuantity, setProductQuantity] = useState("");
+  const [productMaterial, setProductMaterial] = useState("");
+  const [productDescription, setProductDescription] = useState("");
+
+  useEffect(() => {
+    const today = new Date();
+    const dateString = today.toISOString().split('T')[0];
+    setDateImport(dateString);
+  }, []);
+
+  const handlePriceChange = (text) => {
+    if (!isNaN(text)) {
+      setProductPrice(text);
+    }
+  };
+
+  const handleQuantityChange = (text) => {
+    const num = parseInt(text, 10);
+    if (!isNaN(num) && num >= 0 && num % 2 === 0) {
+      setProductQuantity(text);
+    }
+  };
+  const handleSubmit = async () => {
+    const productData = {
+      productName,
+      productPrice: parseFloat(productPrice),
+      productImage,
+      productSize,
+      productType,
+      dateImport,
+      productQuantity: parseInt(productQuantity),
+      productMaterial,
+      productDescription,
+    };
+
+    try {
+      const response = await fetch('http://10.0.3.2:5000/api/products/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWU4NjFlOTJiNWVlYTI4NTU2NDJiM2IiLCJpYXQiOjE3MDk3MjgyMzN9.PlJnL2HO8BExwcleE-aZP5L5c45njL0RDk1jKmaYyXg`, // Token xác thực của bạn
+        },
+        body: JSON.stringify(productData),
+      });
+
+      if (response.ok) {
+        // Xử lý kết quả nếu cần, ví dụ hiển thị thông báo hoặc làm mới danh sách sản phẩm
+        alert("Product added successfully!");
+      } else {
+        alert("Failed to add product. Status code: " + response.status);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <View>
-      <Text>AdminScreen</Text>
+    <View style={styles.container}>
+      <Text>Import New Product</Text>
+      <TextInput placeholder="Product Name" value={productName} onChangeText={setProductName} style={styles.input} />
+      <TextInput placeholder="Product Price" value={productPrice} onChangeText={handlePriceChange} style={styles.input} keyboardType="numeric" />
+      <TextInput placeholder="Imagelink" value={productImage} onChangeText={setProductImage} style={styles.input} />
+      <TextInput placeholder="Product Size" value={productSize} onChangeText={setProductSize} style={styles.input} />
+      
+      <TextInput placeholder="Product Quantity" value={productQuantity} onChangeText={handleQuantityChange} style={styles.input} keyboardType="numeric" />
+      <TextInput placeholder="Product Material" value={productMaterial} onChangeText={setProductMaterial} style={styles.input} />
+      <TextInput placeholder="Product Description" value={productDescription} onChangeText={setProductDescription} style={styles.input} multiline />
+      
+      <Picker
+        selectedValue={productType}
+        onValueChange={(itemValue, itemIndex) => setProductType(itemValue)}
+        style={styles.picker}
+      >
+        <Picker.Item label="Light" value="Light" />
+        <Picker.Item label="Sofa" value="Sofa" />
+        <Picker.Item label="Table" value="Table" />
+        <Picker.Item label="Chair" value="Chair" />
+      </Picker>
+      <Text>Date Import: {dateImport}</Text>
+      <Button title="Submit" onPress={handleSubmit} />
+      
     </View>
+    
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 10,
+  },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginVertical: 5,
+    padding: 10,
+    backgroundColor: 'white',
+  },
+  picker: {
+    height: 20,
+    width: '50%',
+    backgroundColor: 'white',
+  },
+});
 
 export default AdminScreen;

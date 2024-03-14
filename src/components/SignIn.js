@@ -102,7 +102,7 @@ function SignIn({ route }) {
           onChangeText={inputChangedHandler.bind(this, "password")}
           secureTextEntry
         />
-        <Button color="#F5BD02" title="Sign in" onPress={NavigateToUser} />
+        <Button color="#F5BD02" title="Sign in" onPress={NavigateToAdmin} />
         <View style={styles.signUpContainer}>
           <Text style={styles.signUpText}>You do not have an account? </Text>
           <Pressable onPress={() => navigation.navigate("SignUp")}>

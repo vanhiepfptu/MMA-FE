@@ -18,7 +18,9 @@ import IconButton from "./src/components/IconButton";
 import QuotationForm from "./src/components/QuoteForm";
 import QuotationList from "./src/components/QuoteList";
 import ProductDetailScreen from "./src/screens/ProductDetailScreen";
-
+import ProductScreen from "./src/screens/ProductScreen"
+import ProductControl from "./src/screens/ProductControl";
+import ManageProduct from "./src/screens/ManageProduct";
 // Create the stack navigator
 const Stack = createNativeStackNavigator();
 
@@ -50,9 +52,19 @@ function HomeScreen({ navigation }) {
           title="Go to SignUp Screen"
           onPress={() => navigation.navigate("SignUp")}
         />
+        
         <Button
-          title="Product Detail"
-          onPress={() => navigation.navigate("ProductDetailScreen")}
+          title="Product"
+          onPress={() => navigation.navigate("Product")}
+        />
+
+        <Button
+          title="New Product"
+          onPress={() => navigation.navigate("ProductControl")}
+        />
+        <Button
+          title="Edit Product"
+          onPress={() => navigation.navigate("ManageProduct")}
         />
       </View>
     </>
@@ -203,6 +215,9 @@ export default function App() {
           name="ProductDetailScreen"
           component={ProductDetailScreen}
         />
+        <Stack.Screen name="Product" component={ProductScreen} />
+        <Stack.Screen name="ProductControl" component={ProductControl} />
+        <Stack.Screen name="ManageProduct" component={ManageProduct} />
         <Stack.Screen
           name="AdminOverView"
           component={AdminOverView}
