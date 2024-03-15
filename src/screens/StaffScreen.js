@@ -53,7 +53,7 @@ const StaffScreen = () => {
     };
 
     try {
-      const response = await fetch('http://10.0.3.2:5000/api/products/', {
+      const response = await fetch('http://10.0.2.2:5000/api/products/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

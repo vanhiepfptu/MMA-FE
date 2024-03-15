@@ -39,7 +39,7 @@ const ProductScreen = ({ navigation }) => {
   const getProducts = async (page = 1) => {
     setLoading(true);
     try {
-      const response = await fetch(`http://10.0.3.2:5000/api/products?page=${page}`);
+      const response = await fetch(`http://10.0.2.2:5000/api/products?page=${page}`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }

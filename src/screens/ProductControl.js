@@ -46,13 +46,13 @@ function ProductControl() {
         };
 
         try {
-            const response = await fetch('http://10.0.3.2:5000/api/products/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWU4NjFlOTJiNWVlYTI4NTU2NDJiM2IiLCJpYXQiOjE3MDk3MjgyMzN9.PlJnL2HO8BExwcleE-aZP5L5c45njL0RDk1jKmaYyXg`, // Token xác thực của bạn
-                },
-                body: JSON.stringify(productData),
+            const response = await fetch("http://10.0.2.2:5000/api/products/", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWU4NjFlOTJiNWVlYTI4NTU2NDJiM2IiLCJpYXQiOjE3MDk3MjgyMzN9.PlJnL2HO8BExwcleE-aZP5L5c45njL0RDk1jKmaYyXg`, // Token xác thực của bạn
+              },
+              body: JSON.stringify(productData),
             });
 
             if (response.ok) {

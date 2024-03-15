@@ -21,7 +21,7 @@ function ManageProduct() {
         let page = 1;
         try {
             while (true) {
-                const response = await fetch(`http://10.0.3.2:5000/api/products?page=${page}`, {
+                const response = await fetch(`http://10.0.2.2:5000/api/products?page=${page}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -63,7 +63,7 @@ function ManageProduct() {
             };
 
 
-            const response = await fetch(`http://10.0.3.2:5000/api/products/${editableProduct.productid}`, {
+            const response = await fetch(`http://10.0.2.2:5000/api/products/${editableProduct.productid}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -97,7 +97,7 @@ function ManageProduct() {
     };
     const performDeleteProduct = async (productId) => {
         try {
-            const response = await fetch(`http://10.0.3.2:5000/api/products/${productId}`, {
+            const response = await fetch(`http://10.0.2.2:5000/api/products/${productId}`, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${token}`,

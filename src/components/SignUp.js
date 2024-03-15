@@ -8,6 +8,7 @@ import {
   ImageBackground,
   Pressable,
   ScrollView,
+  Dimensions,
 } from "react-native";
 import {
   useFocusEffect,
@@ -15,6 +16,8 @@ import {
   useNavigation,
 } from "@react-navigation/native";
 import { REGISTER } from "../constants/api";
+
+const screenHeight = Dimensions.get("window").height;
 
 function SignUp({}) {
   const navigation = useNavigation();
@@ -180,11 +183,10 @@ export default SignUp;
 
 const styles = StyleSheet.create({
   background: {
-    //flex: 1,
     alignItems: "center",
     justifyContent: "center",
     opacity: 0.86,
-    //height: "100%",
+    height: screenHeight,
   },
   container: {
     width: "80%",
@@ -195,6 +197,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
+    heigh: "100%",
   },
   nameContainer: {
     flexDirection: "row",

@@ -12,8 +12,8 @@ import {
   Modal,
 } from "react-native";
 import axios from "axios";
-import { Geny } from "../constants/api";
-const API_URL = `http://${Geny}:5000/api/project`;
+import { Geny, Android } from "../constants/api";
+const API_URL = `http://${Android}:5000/api/project`;
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Loading from "./../components/Loading";
 import moment from "moment";

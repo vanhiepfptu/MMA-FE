@@ -1,48 +1,93 @@
-import React from "react";
-import { Dimensions, View, Text, ScrollView } from "react-native";
+import { useIsFocused } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
 import { BarChart } from "react-native-chart-kit";
+import { ProgressCircle } from "react-native-svg-charts";
 
 const screenWidth = Dimensions.get("window").width;
 
-const data = {
-  labels: ["January", "February", "March", "April", "May", "June"],
-  datasets: [
-    {
-      data: [20, 45, 28, 80, 99, 43],
-    },
-  ],
-};
-
-const chartConfig = {
-  backgroundGradientFrom: "#1050E7",
-  backgroundGradientFromOpacity: 0,
-  backgroundGradientTo: "#FFFFFF", //background
-  backgroundGradientToOpacity: 0.5,
-  color: () => `#1050E7`,
-  strokeWidth: 2, // optional, default 3
-  barPercentage: 0.5,
-  useShadowColorFromDataset: false, // optional
-};
+const ADMIN_TOKEN =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWU4NjFlOTJiNWVlYTI4NTU2NDJiM2IiLCJpYXQiOjE3MDk3MjgyMzN9.PlJnL2HO8BExwcleE-aZP5L5c45njL0RDk1jKmaYyXg";
+const STAFF_TOKEN =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWU4Yjc3NWMzMWY1MGM5ZTNiZWM3NDMiLCJpYXQiOjE3MDk3NTAxMzN9.cQM3-hYgTDG_59_HvNkZQ7qeSZWrWHl1aLAC699A_2I";
 
 const Charts = () => {
+  [quotations, setQuotations] = useState();
+
+  [amout, setAmout] = useState();
+
+  const data = {
+    labels: ["January", "February", "March", "April", "May", "June"],
+    datasets: [
+      {
+        data: [0, 0, amout !== undefined ? amout : 0, 0, 0, 0],
+      },
+    ],
+  };
+
+  const chartConfig = {
+    backgroundGradientFrom: "#1050E7",
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: "#FFFFFF", //background
+    backgroundGradientToOpacity: 0.5,
+    color: () => `#AB2330`,
+    strokeWidth: 3, // optional, default 3
+    barPercentage: 0.5,
+    useShadowColorFromDataset: false, // optional
+    yAxisSuffix: "",
+  };
+
+  const isFocus = useIsFocused();
+
+  const getAllQuotation = async () => {
+    try {
+      const response = await fetch(
+        "http://10.0.2.2:5000/api/standard-quotations/",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      const data = await response.json();
+      setQuotations(data.data);
+      setAmout(data.data.length);
+      console.log("Data:", data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (isFocus) {
+      getAllQuotation();
+    }
+    console.log("Quantity :", amout);
+  }, [isFocus]);
+
   return (
-    <ScrollView>
+    <ScrollView style={styles.container}>
       <View>
         <Text
           style={{
             textAlign: "center",
             fontSize: 18,
             padding: 16,
-            color: "#1050E7",
+            color: "#F5BD02",
           }}
         >
-          Successfully Quotation Chart
+          Quantity Quotation Chart
         </Text>
+
         <BarChart
           data={data}
           width={screenWidth}
           height={220}
-          yAxisLabel="$"
+          yAxisLabel="SL :"
           chartConfig={chartConfig}
           //verticalLabelRotation={30}
         />
@@ -53,62 +98,27 @@ const Charts = () => {
             textAlign: "center",
             fontSize: 18,
             padding: 16,
-            color: "#1050E7",
+            color: "#F5BD02",
           }}
         >
-          Successfully Quotation Chart
+          Successfully {amout} / {amout + 3} Quotation Chart
         </Text>
-        <BarChart
-          data={data}
-          width={screenWidth}
-          height={220}
-          yAxisLabel="$"
-          chartConfig={chartConfig}
-          //verticalLabelRotation={30}
-        />
-      </View>
-      <View>
-        <Text
-          style={{
-            textAlign: "center",
-            fontSize: 18,
-            padding: 16,
-            color: "#1050E7",
-          }}
-        >
-          Successfully Quotation Chart
-        </Text>
-        <BarChart
-          data={data}
-          width={screenWidth}
-          height={220}
-          yAxisLabel="$"
-          chartConfig={chartConfig}
-          //verticalLabelRotation={30}
-        />
-      </View>
-      <View>
-        <Text
-          style={{
-            textAlign: "center",
-            fontSize: 18,
-            padding: 16,
-            color: "#1050E7",
-          }}
-        >
-          Successfully Quotation Chart
-        </Text>
-        <BarChart
-          data={data}
-          width={screenWidth}
-          height={220}
-          yAxisLabel="$"
-          chartConfig={chartConfig}
-          //verticalLabelRotation={30}
-        />
+        <View style={{ flex: 1 }}>
+          <ProgressCircle
+            style={{ height: 200 }}
+            progress={amout / 5}
+            progressColor={"#AB2330"}
+          />
+        </View>
       </View>
     </ScrollView>
   );
 };
 
 export default Charts;
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#FBE8A5",
+  },
+});

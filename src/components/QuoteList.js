@@ -1,28 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
-import axios from "axios"; // Import Axios
 import { GET_ALL_QUOTAIOTIONS } from "../constants/api";
 
-const QuotationList = () => {
+const QuotationList = ({ refreshKey }) => {
+  // Thêm prop refreshKey
   const [quotations, setQuotations] = useState([]);
   const url = GET_ALL_QUOTAIOTIONS;
 
-    const getData = async () => {
-      try {
-        const response = await fetch(url);
-        const json = await response.json();
-        if (json) {
-          setQuotations(json.data);
-          console.log(json.data);
-        }
-      } catch (err) {
-        console.log(err);
+  const getData = async () => {
+    try {
+      const response = await fetch(url);
+      const json = await response.json();
+      if (json) {
+        setQuotations(json.data);
+        console.log(json.data);
       }
-    };
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-    useEffect(() => {
-      getData();
-    }, []);
+  useEffect(() => {
+    getData();
+  }, [refreshKey]); // Sử dụng refreshKey làm một phần của dependencies
 
   return (
     <View style={styles.container}>
