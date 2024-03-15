@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Button, StyleSheet, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -60,6 +60,18 @@ function HomeScreen({ navigation }) {
 }
 
 function AdminOverView() {
+  const navigation = useNavigation();
+
+  function handleLogout() {
+    AsyncStorage.removeItem("Account")
+      .then(() => {
+        console.log("Account removed from storage.");
+        navigation.navigate("SignIn");
+      })
+      .catch((error) =>
+        console.error("Failed to remove account from storage", error)
+      );
+  }
   return (
     <BottomTabs.Navigator
       screenOptions={({ navigation }) => ({
@@ -70,9 +82,7 @@ function AdminOverView() {
             icon="person"
             size={24}
             color={tintColor}
-            onPress={() => {
-              navigation.navigate("SignIn");
-            }}
+            onPress={handleLogout}
           ></IconButton>
         ),
         tabBarStyle: { backgroundColor: "#AB2330" },
@@ -107,6 +117,18 @@ function AdminOverView() {
 }
 
 function StaffOverView() {
+  const navigation = useNavigation();
+
+  function handleLogout() {
+    AsyncStorage.removeItem("Account")
+      .then(() => {
+        console.log("Account removed from storage.");
+        navigation.navigate("SignIn");
+      })
+      .catch((error) =>
+        console.error("Failed to remove account from storage", error)
+      );
+  }
   return (
     <BottomTabs.Navigator
       screenOptions={({ navigation }) => ({
@@ -117,9 +139,7 @@ function StaffOverView() {
             icon="person"
             size={24}
             color={tintColor}
-            onPress={() => {
-              navigation.navigate("SignIn");
-            }}
+            onPress={handleLogout}
           ></IconButton>
         ),
         tabBarStyle: { backgroundColor: "#AB2330" },
@@ -143,6 +163,18 @@ function StaffOverView() {
 }
 
 function UserOverView() {
+  const navigation = useNavigation();
+
+  function handleLogout() {
+    AsyncStorage.removeItem("Account")
+      .then(() => {
+        console.log("Account removed from storage.");
+        navigation.navigate("SignIn");
+      })
+      .catch((error) =>
+        console.error("Failed to remove account from storage", error)
+      );
+  }
   return (
     <BottomTabs.Navigator
       screenOptions={({ navigation }) => ({
@@ -153,9 +185,7 @@ function UserOverView() {
             icon="person"
             size={24}
             color={tintColor}
-            onPress={() => {
-              navigation.navigate("SignIn");
-            }}
+            onPress={handleLogout}
           ></IconButton>
         ),
         tabBarStyle: { backgroundColor: "#AB2330" },

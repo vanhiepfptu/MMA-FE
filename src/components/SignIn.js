@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Image,
@@ -27,12 +27,24 @@ function SignIn({ route }) {
 
   const isSpecialCharacter = (str) =>
     /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(str);
+
   const isEmpty = (str) => str.trim() === "";
 
   const [login, setLogin] = useState({
     username: "",
     password: "",
   });
+
+  const isFocus = useIsFocused();
+
+  useEffect(() => {
+    if (isFocus) {
+      setLogin({
+        username: "",
+        password: "",
+      });
+    }
+  }, [isFocus]);
 
   const [errors, setErrors] = useState({
     username: "",
@@ -59,59 +71,45 @@ function SignIn({ route }) {
         },
         body: JSON.stringify(login),
       });
+
+      if (!response.ok) {
+        throw new Error("Failed to register user");
+      }
       const data = await response.json();
-      console.log("Login successfully:", data);
-      //reset Login State
+      console.log("1 Login successfully:", data?.account.firstName);
+      await AsyncStorage.setItem("Account", JSON.stringify(data));
       setLogin({
         username: "",
         password: "",
       });
-      //set AsyncStorage
-      await AsyncStorage.setItem("Account", JSON.stringify(data));
-      if (!response.ok) {
-        throw new Error("Failed to register user");
-      }
+      return data;
     } catch (error) {
       console.error("Error login user:", error);
     }
   };
 
   const handleSignIn = async () => {
-    loginUser();
-    const AccountStorage = await AsyncStorage.getItem("Account");
-    const tokens = JSON.parse(AccountStorage)?.account.tokens[0];
-    if (AccountStorage) {
-      console.log("Account Token :", tokens);
-      console.log("Adninnn token :", ADMIN_TOKEN);
-      console.log("Staff token :", STAFF_TOKEN);
-      switch (tokens) {
-        case ADMIN_TOKEN:
-          console.log("ADMIN SCREEN");
-          navigation.navigate("AdminOverView");
-          break;
-        case STAFF_TOKEN:
-          console.log("STAFF SCREEN");
-          navigation.navigate("StaffOverView");
-          break;
-        default:
-          console.log("USER SCREEN");
-          navigation.navigate("UserOverView");
-          break;
+    try {
+      const data = await loginUser();
+      const token = data?.account.tokens[0];
+      console.log("2 Account Token :", token);
+      if (!token) {
+        return;
       }
+      if (token === ADMIN_TOKEN) {
+        console.log("ADMIN SCREEN");
+        navigation.navigate("AdminOverView");
+      } else if (token === STAFF_TOKEN) {
+        console.log("STAFF SCREEN");
+        navigation.navigate("StaffOverView");
+      } else {
+        console.log("USER SCREEN");
+        navigation.navigate("UserOverView");
+      }
+    } catch (error) {
+      console.error("Login or navigation failed:", error);
     }
   };
-
-  // function NavigateToAdmin() {
-  //   navigation.navigate("AdminOverView");
-  // }
-
-  // function NavigateToStaff() {
-  //   navigation.navigate("StaffOverView");
-  // }
-
-  // function NavigateToUser() {
-  //   navigation.navigate("UserOverView");
-  // }
 
   return (
     <ImageBackground
@@ -135,7 +133,9 @@ function SignIn({ route }) {
           onChangeText={inputChangedHandler.bind(this, "password")}
           secureTextEntry
         />
+
         <Button color="#F5BD02" title="Sign in" onPress={handleSignIn} />
+
         <View style={styles.signUpContainer}>
           <Text style={styles.signUpText}>You do not have an account? </Text>
           <Pressable onPress={() => navigation.navigate("SignUp")}>

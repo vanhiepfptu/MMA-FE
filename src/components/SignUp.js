@@ -66,6 +66,7 @@ function SignUp({}) {
             username: "",
             password: "",
           });
+          navigation.navigate("SignIn");
         } catch (error) {
           console.error("Error registering user:", error);
         }
