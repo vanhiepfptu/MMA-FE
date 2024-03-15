@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, ActivityIndicator } from 'react-native';
-import { Card } from 'react-native-elements';
-import { Button } from 'react-native-paper';
+// import { Card } from 'react-native-elements';
+// import { Button } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker';
 const ProductDetailScreen = ({ route }) => {
   const { productId } = route.params;

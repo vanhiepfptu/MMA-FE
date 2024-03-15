@@ -82,7 +82,16 @@ function SignIn({ route }) {
         username: "",
         password: "",
       });
+<<<<<<< HEAD
+      //set AsyncStorage
+      await AsyncStorage.setItem("Account", JSON.stringify(data));
+      navigation.navigate("StaffOverView");
+      if (!response.ok) {
+        throw new Error("Failed to register user");
+      }
+=======
       return data;
+>>>>>>> 2ca8e7d8a9602b8cedd4a435bc8d65e52a7363b6
     } catch (error) {
       console.error("Error login user:", error);
     }

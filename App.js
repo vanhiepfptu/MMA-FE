@@ -18,6 +18,13 @@ import IconButton from "./src/components/IconButton";
 import QuotationForm from "./src/components/QuoteForm";
 import QuotationList from "./src/components/QuoteList";
 import ProductDetailScreen from "./src/screens/ProductDetailScreen";
+import NewsScreen from "./src/screens/NewScreen";
+import DetailNewScreen from "./src/screens/DetailNewScreen";
+import DetailBlogScreen from "./src/screens/DetailBlogScreen";
+import BlogScreen from "./src/screens/BlogScreen";
+import ProjectScreen from "./src/screens/ProjectScreen";
+import DetailProjectScreen from "./src/screens/DetailProjectScreen";
+
 import ProductScreen from "./src/screens/ProductScreen"
 import ProductControl from "./src/screens/ProductControl";
 import ManageProduct from "./src/screens/ManageProduct";
@@ -38,7 +45,7 @@ function HomeScreen({ navigation }) {
         />
         <Button
           title="Go to Staff Screen"
-          onPress={() => navigation.navigate("Staff")}
+          onPress={() => navigation.navigate("StaffOverView")}
         />
         <Button
           title="Go to Chart Screen"
@@ -65,6 +72,10 @@ function HomeScreen({ navigation }) {
         <Button
           title="Edit Product"
           onPress={() => navigation.navigate("ManageProduct")}
+        />
+        <Button
+          title="Project"
+          onPress={() => navigation.navigate("Project")}
         />
       </View>
     </>
@@ -170,6 +181,28 @@ function StaffOverView() {
           ),
         }}
       ></BottomTabs.Screen>
+      <BottomTabs.Screen
+        name="StaffNews"
+        component={NewsScreen}
+        options={{
+          title: "News",
+          tabBarLabel: "News",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="newspaper-outline" size={size} color={color} />
+          ),
+        }}
+      ></BottomTabs.Screen>
+      <BottomTabs.Screen
+        name="StaffBlogs"
+        component={BlogScreen}
+        options={{
+          title: "Blogs",
+          tabBarLabel: "Blogs",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="book-outline" size={size} color={color} />
+          ),
+        }}
+      ></BottomTabs.Screen>
     </BottomTabs.Navigator>
   );
 }
@@ -256,8 +289,14 @@ export default function App() {
         <Stack.Screen
           name="StaffOverView"
           component={StaffOverView}
-          options={{ headerShown: false }}
+          options={({ navigation }) => ({
+            headerShown: false,
+          })}
         ></Stack.Screen>
+        <Stack.Screen name="DetailNew" component={DetailNewScreen} />
+        <Stack.Screen name="DetailBlog" component={DetailBlogScreen} />
+        <Stack.Screen name="Project" component={ProjectScreen} />
+        <Stack.Screen name="DetailProject" component={DetailProjectScreen} />
         <Stack.Screen
           name="UserOverView"
           component={UserOverView}
