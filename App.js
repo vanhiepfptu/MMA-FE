@@ -5,7 +5,7 @@ import { Button, StyleSheet, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StatusBar } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // // Import screens
 // import UserScreen from "./src/UserScreen";
 import Charts from "./src/components/Charts";
