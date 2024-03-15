@@ -1,11 +1,14 @@
-import { Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Text, View, TextInput, Button, StyleSheet } from "react-native";
+import { Picker } from '@react-native-picker/picker';
+import { TouchableOpacity } from 'react-native';
+import ManageProduct from "./ManageProduct";
+import { useNavigation } from '@react-navigation/native';
+
 
 function AdminScreen() {
-  return (
-    <View>
-      <Text>AdminScreen</Text>
-    </View>
-  );
-}
+
+
+};
 
 export default AdminScreen;

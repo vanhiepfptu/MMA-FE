@@ -113,8 +113,9 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     marginVertical: 5,
+    flexWrap: 'wrap', // Cho phép các item bên trong container này xuống dòng nếu không đủ không gian
   },
 
   descriptionContainer: {
@@ -124,6 +125,9 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 24,
     fontWeight: 'bold',
+    flex: 1, // Cho phép chiếm đến một nửa không gian container nếu cần
+    flexWrap: 'wrap', // Cho phép text xuống dòng nếu không đủ không gian
+    marginRight: 10, // Thêm một chút khoảng cách giữa productName và productPrice
   },
   review: {
     fontSize: 15,
@@ -134,6 +138,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#FF6600',
+    alignSelf: 'flex-start', // Cho phép chiếm đến một nửa không gian container
   },
   description: {
     fontSize: 16,
