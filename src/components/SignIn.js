@@ -68,6 +68,7 @@ function SignIn({ route }) {
       });
       //set AsyncStorage
       await AsyncStorage.setItem("Account", JSON.stringify(data));
+      navigation.navigate("StaffOverView");
       if (!response.ok) {
         throw new Error("Failed to register user");
       }
