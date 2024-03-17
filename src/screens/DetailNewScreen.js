@@ -40,33 +40,58 @@ export default function DetailNewScreen({ route }) {
     }
   };
   return (
-    <View className="flex-1 items-center justify-center">
+    <>
       {loading ? (
         <Loading />
       ) : (
         news && (
-          <>
-            <Image
-              source={{ uri: news?.images[0] }}
-              className="w-64 h-64 mb-8 rounded-2xl"
-              style={{ resizeMode: "contain" }}
-            />
-            <Text className="text-2xl font-bold mb-4">{news?.title}</Text>
-            <Text className="text-lg mb-6">{news?.content}</Text>
-            <Text className="text-lg">author: {news?.author}</Text>
-            <Text className="text-lg">
-              publishDate: {moment(news?.publishDate).format("DD/MM/YYYY")}
-            </Text>
-
-            {/* <TouchableOpacity
-              // onPress={}
-              className=" w-20 h-20 p-2 rounded-full bg-gray-200 mb-4 flex items-center justify-center"
-            >
-              <Icon name={"heart"} size={32} color={"red"} />
-            </TouchableOpacity> */}
-          </>
+          <ScrollView style={styles.scrollView}>
+            <View style={styles.container}>
+              <Image source={{ uri: news?.images[0] }} style={styles.image} />
+              <Text style={styles.title}>{news?.title}</Text>
+              <Text style={styles.content}>{news?.content}</Text>
+              <Text style={styles.author}>Author: {news?.author}</Text>
+              <Text style={styles.publishDate}>
+                Publish Date: {moment(news?.publishDate).format("DD/MM/YYYY")}
+              </Text>
+            </View>
+          </ScrollView>
         )
       )}
-    </View>
+    </>
   );
 }
+const styles = StyleSheet.create({
+  scrollView: {
+    flex: 1,
+    backgroundColor: "#FFF",
+  },
+  container: {
+    alignItems: "flex-start",
+    padding: 20,
+  },
+  image: {
+    width: "100%",
+    height: 200,
+    borderRadius: 10,
+    resizeMode: "cover",
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  content: {
+    fontSize: 16,
+    marginBottom: 10,
+    textAlign: "justify",
+  },
+  author: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  publishDate: {
+    fontSize: 16,
+  },
+});

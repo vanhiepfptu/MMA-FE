@@ -40,33 +40,56 @@ export default function DetailBlogScreen({ route }) {
     }
   };
   return (
-    <View className="flex-1 items-center justify-center">
+    <>
       {loading ? (
         <Loading />
       ) : (
         news && (
-          <>
-            <Image
-              source={{ uri: news?.images[0] }}
-              className="w-64 h-64 mb-8 rounded-2xl"
-              style={{ resizeMode: "contain" }}
-            />
-            <Text className="text-2xl font-bold mb-4">{news?.blogsTitle}</Text>
-            <Text className="text-lg mb-6">{news?.blogsContent}</Text>
-            <Text className="text-lg">author: {news?.author}</Text>
-            <Text className="text-lg">
-              publishDate: {moment(news?.publishDate).format("DD/MM/YYYY")}
-            </Text>
-
-            {/* <TouchableOpacity
-              // onPress={}
-              className=" w-20 h-20 p-2 rounded-full bg-gray-200 mb-4 flex items-center justify-center"
-            >
-              <Icon name={"heart"} size={32} color={"red"} />
-            </TouchableOpacity> */}
-          </>
+          <ScrollView style={styles.scrollView}>
+            <View style={styles.container}>
+              <Image source={{ uri: news?.images[0] }} style={styles.image} />
+              <Text style={styles.title}>{news?.blogsTitle}</Text>
+              <Text style={styles.content}>{news?.blogsContent}</Text>
+              <Text style={styles.detail}>Author : {news?.author}</Text>
+              <Text style={styles.detail}>
+                Publish Date : {moment(news?.publishDate).format("DD/MM/YYYY")}
+              </Text>
+            </View>
+          </ScrollView>
         )
       )}
-    </View>
+    </>
   );
 }
+
+const styles = StyleSheet.create({
+  scrollView: {
+    flex: 1,
+    backgroundColor: "#FFF",
+  },
+  container: {
+    alignItems: "flex-start",
+    padding: 20,
+  },
+  image: {
+    width: "100%",
+    height: 300,
+    borderRadius: 20,
+    resizeMode: "cover",
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  content: {
+    fontSize: 18,
+    marginBottom: 10,
+    textAlign: "justify",
+  },
+  detail: {
+    fontSize: 16, // Kích thước font cho thông tin tác giả và ngày xuất bản
+    marginBottom: 5, // Khoảng cách giữa các thông tin chi tiết
+  },
+});
