@@ -6,8 +6,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import moment from "moment";
 import Loading from "../components/Loading";
-import { Geny, Android } from "../constants/api";
-const API_URL = `http://${Android}:5000/api/news`;
+import { API_NEWS } from "../constants/api";
+const API_URL = API_NEWS;
 export default function DetailNewScreen({ route }) {
   const navigation = useNavigation();
   const { item } = route.params;

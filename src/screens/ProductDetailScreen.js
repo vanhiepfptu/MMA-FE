@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, ScrollView, ActivityIndicator } from 're
 // import { Card } from 'react-native-elements';
 // import { Button } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker';
+import { host } from '../constants/api';
 const ProductDetailScreen = ({ route }) => {
   const { productId } = route.params;
   const [product, setProduct] = useState(null);
@@ -12,7 +13,7 @@ const ProductDetailScreen = ({ route }) => {
   useEffect(() => {
     const fetchProductDetail = async () => {
       try {
-        const response = await fetch(`http://10.0.2.2:5000/api/products/${productId}`);
+        const response = await fetch(`http://${host}:5000/api/products/${productId}`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

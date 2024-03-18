@@ -4,6 +4,7 @@ import { Picker } from '@react-native-picker/picker';
 import { TouchableOpacity } from 'react-native';
 import ManageProduct from "./ManageProduct";
 import { useNavigation } from '@react-navigation/native';
+import { host } from "../constants/api";
 
 const StaffScreen = () => {
   const [productName, setProductName] = useState("");
@@ -53,7 +54,7 @@ const StaffScreen = () => {
     };
 
     try {
-      const response = await fetch('http://10.0.2.2:5000/api/products/', {
+      const response = await fetch(`http://${host}:5000/api/products/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

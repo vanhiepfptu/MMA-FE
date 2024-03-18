@@ -6,9 +6,12 @@ import {
   Button,
   StyleSheet,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
-import { GET_ALL_QUOTAIOTIONS } from "../constants/api";
+import { GET_ALL_QUOTAIOTIONS, backend_host } from "../constants/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Checkbox } from "react-native-paper";
+// import { ScrollView } from "react-native-web";
 
 const QuotationForm = ({ onSubmit }) => {
   const [selectedItems, setSelectedItems] = useState([]);
@@ -56,7 +59,7 @@ const QuotationForm = ({ onSubmit }) => {
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY0ODg3NjJjZjM2OGRiY2VhMjJjMTciLCJpYXQiOjE3MTA1MjQ1MzR9.lqlRkPu-XQ55taKNmZ9v0RIHqFjDuduPV5ty3G7A-Xo";
     try {
       const response = await fetch(
-        "http://192.168.56.1:5000/api/standard-quotations/calculate-quotation",
+        `http://${backend_host}:5000/api/standard-quotations/calculate-quotation`,
         {
           method: "POST",
           headers: {
@@ -114,21 +117,60 @@ const QuotationForm = ({ onSubmit }) => {
   };
 
   return (
-    <View style={styles.container}>
+    // <View style={styles.container}>
+    //   <View style={styles.card}>
+    //     <Text style={styles.title}>
+    //       HÃY ĐỂ LẠI THÔNG TIN BÁO GIÁ MÀ BẠN QUAN TÂM
+    //     </Text>
+    //     {quotations.map((item) => (
+    //       <TouchableOpacity
+    //         key={item.quotationName}
+    //         style={styles.checkboxContainer}
+    //         onPress={() => handleSelectItem(item.quotationId)}
+    //       >
+    //         <Text style={styles.checkboxLabel}>{item.quotationName}</Text>
+    //         <Text>Giá: {item.quotationPrice} </Text>
+    //         <Text>{selectedItems.includes(item.quotationId) ? " ✓" : ""}</Text>
+    //       </TouchableOpacity>
+    //     ))}
+    //     <TextInput
+    //       style={styles.input}
+    //       placeholder="Enter your email"
+    //       value={email}
+    //       onChangeText={setEmail}
+    //     />
+    //     {error ? <Text style={styles.error}>{error}</Text> : null}
+    //     <Button title="Gửi form" onPress={handleSubmit} />
+    //     {notifications ? (
+    //       <Text style={styles.notification}>{notifications}</Text>
+    //     ) : null}
+    //   </View>
+    // </View>
+    <ScrollView style={styles.container}>
       <View style={styles.card}>
         <Text style={styles.title}>
           HÃY ĐỂ LẠI THÔNG TIN BÁO GIÁ MÀ BẠN QUAN TÂM
         </Text>
         {quotations.map((item) => (
-          <TouchableOpacity
-            key={item.quotationName}
-            style={styles.checkboxContainer}
-            onPress={() => handleSelectItem(item.quotationId)}
-          >
-            <Text style={styles.checkboxLabel}>{item.quotationName}</Text>
-            <Text>Giá: {item.quotationPrice} </Text>
-            <Text>{selectedItems.includes(item.quotationId) ? " ✓" : ""}</Text>
-          </TouchableOpacity>
+          <View key={item.quotationId} style={styles.row}>
+            <TouchableOpacity
+              key={item.quotationName}
+              style={styles.checkboxContainer}
+              onPress={() => handleSelectItem(item.quotationId)}
+            >
+              <Text style={styles.cell}>
+                {`${item.quotationName} - $${item.quotationPrice}`}{" "}
+                {selectedItems.includes(item.quotationId) ? " ✓" : ""}
+              </Text>
+              {/* <Checkbox
+              value={selectedItems.includes(item.quotationId)}
+              onPress={() => handleSelectItem(item.quotationId)}
+            /> */}
+              {/* <Text>
+                {selectedItems.includes(item.quotationId) ? " ✓" : ""}
+              </Text> */}
+            </TouchableOpacity>
+          </View>
         ))}
         <TextInput
           style={styles.input}
@@ -142,59 +184,49 @@ const QuotationForm = ({ onSubmit }) => {
           <Text style={styles.notification}>{notifications}</Text>
         ) : null}
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
-    backgroundColor: "#f8f8f8",
-    color: "#444",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    flex: 1,
   },
   card: {
+    padding: 20,
     backgroundColor: "#fff",
-    // borderRadius: "5",
-    boxShadow: "0 0 5 rgba(#124, 0)",
-    overflow: "hidden",
+  },
+  row: {
+    flexDirection: "row",
+    // justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+  },
+  cell: {
+    flex: 1,
+  },
+  choosen: {
+    backgroundColor: "green",
   },
   input: {
     height: 40,
     borderColor: "gray",
     borderWidth: 1,
+    marginTop: 20,
     marginBottom: 20,
-    padding: 10,
-    marginHorizontal: 10,
-  },
-  checkboxContainer: {
-    flexDirection: "row",
-    marginBottom: 20,
-    alignItems: "center",
-    marginHorizontal: 10,
-  },
-  checkboxLabel: {
-    marginRight: 8,
+    paddingHorizontal: 10,
   },
   error: {
     color: "red",
   },
   title: {
-    fontSize: 14,
+    fontSize: 16,
     color: "black",
     fontWeight: "bold",
-    marginHorizontal: 16,
     marginBottom: 10,
-    marginVertical: 10,
-    // fontFamily: "Montserrat",
   },
-  // form: {
-  //   margin: 10,
-  //   backgroundColor: "#BCFBF9",
-  //   padding: 16,
-  // },
   notification: {
     color: "#FF0000",
     marginVertical: 10,

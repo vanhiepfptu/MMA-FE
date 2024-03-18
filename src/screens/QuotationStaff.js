@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import QuotationList from "../components/QuoteList";
+import { backend_host } from "../constants/api";
+
 const QuotationStaffScreen = ({ onAddSuccess }) => {
   const [quotationName, setQuotationName] = useState("");
   const [refreshKey, setRefreshKey] = useState(0);
@@ -24,7 +26,7 @@ const QuotationStaffScreen = ({ onAddSuccess }) => {
     };
     try {
       const response = await fetch(
-        "http://192.168.56.1:5000/api/standard-quotations/",
+        `http://${backend_host}:5000/api/standard-quotations/`,
         {
           method: "POST",
           headers: {

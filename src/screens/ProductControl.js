@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Text, View, TextInput, Button, StyleSheet } from "react-native";
 import { Picker } from '@react-native-picker/picker';
 import { TouchableOpacity } from 'react-native';
+import { host } from "../constants/api";
 
 function ProductControl() {
     const [productName, setProductName] = useState("");
@@ -46,7 +47,7 @@ function ProductControl() {
         };
 
         try {
-            const response = await fetch("http://10.0.2.2:5000/api/products/", {
+            const response = await fetch(`http://${host}:5000/api/products/`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

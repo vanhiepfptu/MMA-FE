@@ -370,17 +370,17 @@ function UserOverView() {
             ),
           }}
         ></BottomTabs.Screen>
-        {/* <BottomTabs.Screen
-          name="QuoteList"
-          component={QuotationList}
+        <BottomTabs.Screen
+          name="Project"
+          component={ProjectScreen}
           options={{
-            title: "Quotation List",
-            tabBarLabel: "Quotation List",
+            title: "Project",
+            tabBarLabel: "Project",
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="podium" size={size} color={color} />
             ),
           }}
-        ></BottomTabs.Screen> */}
+        ></BottomTabs.Screen>
       </BottomTabs.Navigator>
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.centeredView}>

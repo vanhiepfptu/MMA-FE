@@ -12,8 +12,8 @@ import {
   Modal,
 } from "react-native";
 import axios from "axios";
-import { Geny, Android } from "../constants/api";
-const API_URL = `http://${Android}:5000/api/project`;
+import { API_PROJECT } from "../constants/api";
+const API_URL = API_PROJECT;
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Loading from "./../components/Loading";
 import moment from "moment";
@@ -21,6 +21,7 @@ const ProjectScreen = ({ navigation }) => {
   const { top } = useSafeAreaInsets();
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     fetchNews();
   }, []);
@@ -41,32 +42,32 @@ const ProjectScreen = ({ navigation }) => {
   const goToDetailScreen = (item) => {
     navigation.navigate("DetailProject", { item });
   };
+
   const renderItem = ({ item }) => (
-    <TouchableOpacity onPress={() => goToDetailScreen(item)}>
-      <View className="bg-zinc-200 border-gray-300 border-2 p-2 rounded-2xl mb-4 flex-row items-center justify-between">
-        {/* <Image
-          source={{ uri: item.projectImages[0] }}
-          className="w-32 h-32 rounded-2xl"
-          style={{ resizeMode: "contain" }}
-        /> */}
+    <TouchableOpacity
+      onPress={() => goToDetailScreen(item)}
+      style={styles.projectItem}
+    >
+      <View style={styles.projectCard}>
         <View>
-          <Text className="text-2xl font-semibold">{item.projectTitle}</Text>
-          <Text className="text-lg">
-            startDate: {moment(item.startDate).format("DD/MM/YYYY")}
+          <Text style={styles.projectTitle}>{item.projectTitle}</Text>
+          <Text style={styles.projectDate}>
+            start: {moment(item.startDate).format("DD/MM/YYYY")}
           </Text>
-          <Text className="text-lg">
-            endDate: {moment(item.endDate).format("DD/MM/YYYY")}
+          <Text style={styles.projectDate}>
+            end: {moment(item.endDate).format("DD/MM/YYYY")}
           </Text>
-          <Text className="text-lg">client: {item.client.username}</Text>
+          <Text style={styles.projectClient}>
+            client: {item.client.username}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>
   );
 
   return (
-    <View className="flex-1" style={{ marginTop: top }}>
-      <Text>Project List</Text>
-      <View className="mb-2" />
+    <View style={[styles.container, { marginTop: top }]}>
+      <Text style={styles.title}>Project List</Text>
       {loading ? (
         <Loading />
       ) : (
@@ -74,11 +75,47 @@ const ProjectScreen = ({ navigation }) => {
           data={projects}
           renderItem={renderItem}
           keyExtractor={(item) => item.projectid.toString()}
-          className="px-4"
+          numColumns={2}
+          contentContainerStyle={styles.listContent}
         />
       )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    padding: 20,
+    textAlign: "center",
+  },
+  listContent: {
+    paddingHorizontal: 4,
+  },
+  projectItem: {
+    flex: 1,
+    padding: 4, // Adjust padding as needed
+  },
+  projectCard: {
+    backgroundColor: "#f8f8f8",
+    borderRadius: 10,
+    padding: 10,
+    // Add shadow or border as needed
+  },
+  projectTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  projectDate: {
+    fontSize: 14,
+  },
+  projectClient: {
+    fontSize: 14,
+  },
+});
 
 export default ProjectScreen;

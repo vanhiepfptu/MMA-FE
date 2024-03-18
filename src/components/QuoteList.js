@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { GET_ALL_QUOTAIOTIONS } from "../constants/api";
 
 const QuotationList = ({ refreshKey }) => {
-  // Thêm prop refreshKey
   const [quotations, setQuotations] = useState([]);
   const url = GET_ALL_QUOTAIOTIONS;
 
@@ -22,47 +21,56 @@ const QuotationList = ({ refreshKey }) => {
 
   useEffect(() => {
     getData();
-  }, [refreshKey]); // Sử dụng refreshKey làm một phần của dependencies
+  }, [refreshKey]);
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text style={styles.title}>Danh sách báo giá chuẩn</Text>
-      <FlatList
-        data={quotations}
-        keyExtractor={(item) => item.quotationId.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.item}>
-            <Text style={styles.quote}>{item.quotationName}</Text>
-            <Text style={styles.price}>Giá: ${item.quotationPrice}</Text>
+      <View style={styles.table}>
+        <View style={styles.tableRow}>
+          <Text style={[styles.tableCell, styles.header]}>Tên Quotation</Text>
+          <Text style={[styles.tableCell, styles.header]}>Giá</Text>
+          <Text style={[styles.tableCell, styles.header]}>Mô tả</Text>
+        </View>
+        {quotations.map((quotation) => (
+          <View key={quotation.quotationId.toString()} style={styles.tableRow}>
+            <Text style={styles.tableCell}>{quotation.quotationName}</Text>
+            <Text style={styles.tableCell}>${quotation.quotationPrice}</Text>
+            <Text style={styles.tableCell}>
+              {quotation.quotationDescription}
+            </Text>
           </View>
-        )}
-      />
-    </View>
+        ))}
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 20,
-  },
-  item: {
-    backgroundColor: "lightgray",
     padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
-  quote: {
-    fontSize: 14,
-  },
-  price: {
-    fontSize: 12,
-    color: "darkslateblue",
   },
   title: {
     fontSize: 20,
     color: "black",
-    marginHorizontal: 16,
+    marginBottom: 10,
+  },
+  table: {
+    flexDirection: "column",
+  },
+  tableRow: {
+    flexDirection: "row",
+    borderBottomWidth: 1,
+    borderColor: "#ddd",
+    paddingBottom: 5,
+    paddingTop: 5,
+  },
+  tableCell: {
+    flex: 1,
+  },
+  header: {
+    fontWeight: "bold",
   },
 });
 
