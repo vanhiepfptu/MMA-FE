@@ -34,6 +34,8 @@ import QuotationStaffScreen from "./src/screens/QuotationStaff";
 import ProductScreen from "./src/screens/ProductScreen";
 import ProductControl from "./src/screens/ProductControl";
 import ManageProduct from "./src/screens/ManageProduct";
+import News from "./src/screens/News";
+import Blogs from "./src/screens/Blogs";
 
 // Create the stack navigator
 const Stack = createNativeStackNavigator();
@@ -406,11 +408,34 @@ export default function App() {
     <>
       <StatusBar style="light" />
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="SignIn">
+        <Stack.Navigator
+          initialRouteName="SignIn"
+          screenOptions={({ navigation }) => ({
+            headerStyle: { backgroundColor: "#F5BD02" },
+            headerTintColor: "#AB2330",
+            // headerRight: ({ tintColor }) => (
+            //   <IconButton
+            //     icon="log-out"
+            //     size={24}
+            //     color={tintColor}
+            //     onPress={openModal}
+            //   ></IconButton>
+            // ),
+          })}
+        >
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Báo giá chuẩn" component={UserScreen} />
           <Stack.Screen name="Staff" component={StaffScreen} />
           <Stack.Screen name="Chart" component={Charts}></Stack.Screen>
+          <Stack.Screen name="News" component={News}></Stack.Screen>
+          <Stack.Screen name="Blogs" component={Blogs}></Stack.Screen>
+          <Stack.Screen name="Product" component={ProductScreen} />
+          <Stack.Screen name="ProductControl" component={ProductControl} />
+          <Stack.Screen name="ManageProduct" component={ManageProduct} />
+          <Stack.Screen name="DetailNew" component={DetailNewScreen} />
+          <Stack.Screen name="DetailBlog" component={DetailBlogScreen} />
+          <Stack.Screen name="Project" component={ProjectScreen} />
+          <Stack.Screen name="DetailProject" component={DetailProjectScreen} />
           <Stack.Screen
             name="SignIn"
             component={SignIn}
@@ -425,13 +450,6 @@ export default function App() {
             name="ProductDetailScreen"
             component={ProductDetailScreen}
           />
-          <Stack.Screen name="Product" component={ProductScreen} />
-          <Stack.Screen name="ProductControl" component={ProductControl} />
-          <Stack.Screen name="ManageProduct" component={ManageProduct} />
-          <Stack.Screen name="DetailNew" component={DetailNewScreen} />
-          <Stack.Screen name="DetailBlog" component={DetailBlogScreen} />
-          <Stack.Screen name="Project" component={ProjectScreen} />
-          <Stack.Screen name="DetailProject" component={DetailProjectScreen} />
           <Stack.Screen
             name="AdminOverView"
             component={AdminOverView}

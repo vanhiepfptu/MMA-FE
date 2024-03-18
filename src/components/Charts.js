@@ -11,16 +11,22 @@ const ADMIN_TOKEN =
 const STAFF_TOKEN =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWU4Yjc3NWMzMWY1MGM5ZTNiZWM3NDMiLCJpYXQiOjE3MDk3NTAxMzN9.cQM3-hYgTDG_59_HvNkZQ7qeSZWrWHl1aLAC699A_2I";
 
-const Charts = () => {
+function Charts() {
   [quotations, setQuotations] = useState();
 
-  [amout, setAmout] = useState();
+  [amount, setAmount] = useState();
+
+  const totalAmount = () => {
+    if (amount) {
+      return amount + 3;
+    }
+  };
 
   const data = {
     labels: ["January", "February", "March", "April", "May", "June"],
     datasets: [
       {
-        data: [0, 0, amout !== undefined ? amout : 0, 0, 0, 0],
+        data: [0, 0, amount !== undefined ? amount : 0, 0, 0, 0],
       },
     ],
   };
@@ -42,7 +48,7 @@ const Charts = () => {
   const getAllQuotation = async () => {
     try {
       const response = await fetch(
-        "http://10.0.2.2:5000/api/standard-quotations/",
+        "http://10.0.3.2:5000/api/standard-quotations/",
         {
           method: "GET",
           headers: {
@@ -55,7 +61,7 @@ const Charts = () => {
       }
       const data = await response.json();
       setQuotations(data.data);
-      setAmout(data.data.length);
+      setAmount(data.data.length);
       console.log("Data:", data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -66,7 +72,7 @@ const Charts = () => {
     if (isFocus) {
       getAllQuotation();
     }
-    console.log("Quantity :", amout);
+    console.log("Quantity :", amount);
   }, [isFocus]);
 
   return (
@@ -101,19 +107,19 @@ const Charts = () => {
             color: "#F5BD02",
           }}
         >
-          Successfully {amout} / {amout + 3} Quotation Chart
+          Successfully {amount} / {amount + 3} Quotation Chart
         </Text>
         <View style={{ flex: 1 }}>
           <ProgressCircle
             style={{ height: 200 }}
-            progress={amout / 5}
+            progress={amount / (amount + 3)}
             progressColor={"#AB2330"}
           />
         </View>
       </View>
     </ScrollView>
   );
-};
+}
 
 export default Charts;
 
