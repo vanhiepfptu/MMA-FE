@@ -14,8 +14,8 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import axios from "axios";
 import { firebase } from "../constants/firebase.configs";
-import { Geny } from "../constants/api";
-const API_URL = `http://${Geny}:5000/api/news`;
+import { API_NEWS } from "../constants/api";
+const API_URL = API_NEWS;
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Loading from "./../components/Loading";
 import Card from "../components/Card";
