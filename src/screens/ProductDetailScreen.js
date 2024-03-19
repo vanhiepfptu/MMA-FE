@@ -9,8 +9,8 @@ import {
 } from "react-native";
 // import { Card } from 'react-native-elements';
 // import { Button } from 'react-native-paper';
-import { Picker } from '@react-native-picker/picker';
-import { host } from '../constants/api';
+import { Picker } from "@react-native-picker/picker";
+import { host } from "../constants/api";
 const ProductDetailScreen = ({ route }) => {
   const { productId } = route.params;
   const [product, setProduct] = useState(null);
@@ -20,7 +20,9 @@ const ProductDetailScreen = ({ route }) => {
   useEffect(() => {
     const fetchProductDetail = async () => {
       try {
-        const response = await fetch(`http://${host}:5000/api/products/${productId}`);
+        const response = await fetch(
+          `http://${host}:5000/api/products/${productId}`
+        );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -48,10 +50,12 @@ const ProductDetailScreen = ({ route }) => {
           <Image source={{ uri: product.productImage }} style={styles.image} />
           <View style={styles.headerContainer}>
             <Text style={styles.name}>{product.productName}</Text>
+            {/* <Text style={styles.price}>${product.productPrice}</Text> */}
+          </View>
+          <View style={styles.headerContainer}>
             <Text style={styles.price}>${product.productPrice}</Text>
           </View>
           <Text style={styles.review}>★ 4.5 (20 Review)</Text>
-
           <View style={styles.descriptionContainer}>
             <Text style={styles.detail}>Details</Text>
             <Text style={styles.description}>{product.productDescription}</Text>
@@ -63,7 +67,6 @@ const ProductDetailScreen = ({ route }) => {
               Category:{" "}
               <Text style={styles.boldText}>{product.productType}</Text>
             </Text>
-
             <Text style={styles.description}>
               In-stock:{" "}
               <Text style={styles.boldText}>{product.productQuantity}</Text>
@@ -91,65 +94,75 @@ const ProductDetailScreen = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    padding: 20,
+    backgroundColor: "#FBE8A5",
   },
   boldText: {
     fontWeight: "bold",
+    color: "#333333",
   },
   sizeContainer: {
-    marginTop: 10,
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: "#F5BD02",
+    borderRadius: 10,
   },
-
   size: {
-    fontSize: 15,
+    fontSize: 18,
     fontWeight: "bold",
+    color: "#333333",
   },
   image: {
     width: "100%",
     height: 300,
+    resizeMode: "cover",
+    borderRadius: 15,
+    marginBottom: 20,
   },
   detail: {
-    fontSize: 15,
+    fontSize: 18,
     fontWeight: "bold",
+    color: "#333333",
+    marginBottom: 10,
   },
   picker: {
     height: 50,
-    width: 150,
+    width: "100%",
+    marginTop: 10,
   },
   headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "flex-start",
-    marginVertical: 5,
-    flexWrap: "wrap", // Cho phép các item bên trong container này xuống dòng nếu không đủ không gian
+    alignItems: "center",
+    marginVertical: 10,
   },
-
   descriptionContainer: {
-    marginTop: 10,
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: "#F5BD02",
+    borderRadius: 10,
   },
-
   name: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: "bold",
-    flex: 1, // Cho phép chiếm đến một nửa không gian container nếu cần
-    flexWrap: "wrap", // Cho phép text xuống dòng nếu không đủ không gian
-    marginRight: 10, // Thêm một chút khoảng cách giữa productName và productPrice
+    color: "#333333",
   },
   review: {
-    fontSize: 15,
-    color: "#FF6600", // Màu vàng cho sao
-    marginVertical: 0,
+    fontSize: 16,
+    color: "#FFA500",
+    marginVertical: 10,
   },
   price: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "bold",
-    color: "#FF6600",
-    alignSelf: "flex-start", // Cho phép chiếm đến một nửa không gian container
+    color: "#E63946",
   },
   description: {
     fontSize: 16,
+    color: "#333333",
+    lineHeight: 24,
+    marginBottom: 5,
   },
-  // Thêm các styles cho các chi tiết khác của sản phẩm
 });
 
 export default ProductDetailScreen;

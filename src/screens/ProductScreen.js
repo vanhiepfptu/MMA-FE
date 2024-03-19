@@ -1,8 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity, ActivityIndicator, TextInput } from 'react-native';
-import { fetchProducts, host } from '../constants/api';
-import ProductDetailScreen from './ProductDetailScreen';
-import { Picker } from '@react-native-picker/picker';
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  FlatList,
+  TouchableOpacity,
+  ActivityIndicator,
+  TextInput,
+} from "react-native";
+import { fetchProducts, host } from "../constants/api";
+import ProductDetailScreen from "./ProductDetailScreen";
+import { Picker } from "@react-native-picker/picker";
 
 const ProductCard = ({ product, onPress }) => (
   <TouchableOpacity onPress={() => onPress(product)} style={styles.card}>
@@ -17,19 +26,19 @@ const ProductScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [filterCategory, setFilterCategory] = useState('');
-  const [sortPrice, setSortPrice] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
-  const categories = ['All', 'Chair', 'Sofa', 'Light', 'Table'];
+  const [filterCategory, setFilterCategory] = useState("");
+  const [sortPrice, setSortPrice] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const categories = ["All", "Chair", "Sofa", "Light", "Table"];
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   const handleCategoryPress = (category) => {
-    if (category === 'All') {
-      setFilterCategory('');
-      setSelectedCategory(category);// Loại bỏ bộ lọc nếu chọn "All"
+    if (category === "All") {
+      setFilterCategory("");
+      setSelectedCategory(category); // Loại bỏ bộ lọc nếu chọn "All"
     } else {
       setFilterCategory(category);
-      setSelectedCategory(category);  // Áp dụng bộ lọc nếu chọn danh mục cụ thể
+      setSelectedCategory(category); // Áp dụng bộ lọc nếu chọn danh mục cụ thể
     }
   };
   useEffect(() => {
@@ -39,7 +48,9 @@ const ProductScreen = ({ navigation }) => {
   const getProducts = async (page = 1) => {
     setLoading(true);
     try {
-      const response = await fetch(`http://${host}:5000/api/products?page=${page}`);
+      const response = await fetch(
+        `http://${host}:5000/api/products?page=${page}`
+      );
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -48,30 +59,39 @@ const ProductScreen = ({ navigation }) => {
       setCurrentPage(data.currentPage);
 
       if (page > 1) {
-        setProducts(prevProducts => [...prevProducts, ...data.data]);
+        setProducts((prevProducts) => [...prevProducts, ...data.data]);
       } else {
         setProducts(data.data);
       }
     } catch (error) {
-      console.error('Failed to fetch products:', error);
+      console.error("Failed to fetch products:", error);
     } finally {
       setLoading(false);
     }
   };
   const CategoryCard = ({ categoryName, onPress, isSelected }) => (
-    <TouchableOpacity onPress={onPress} style={[styles.categoryCard, isSelected && styles.selectedCategoryCard]}>
-      <Text style={[styles.categoryText, isSelected && styles.selectedCategoryText]}>{categoryName}</Text>
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.categoryCard, isSelected && styles.selectedCategoryCard]}
+    >
+      <Text
+        style={[styles.categoryText, isSelected && styles.selectedCategoryText]}
+      >
+        {categoryName}
+      </Text>
     </TouchableOpacity>
   );
   const filteredProducts = products
-    .filter(product =>
-      (filterCategory === '' || product.productType === filterCategory) &&
-      (searchQuery === '' || product.productName.toLowerCase().includes(searchQuery.toLowerCase()))
+    .filter(
+      (product) =>
+        (filterCategory === "" || product.productType === filterCategory) &&
+        (searchQuery === "" ||
+          product.productName.toLowerCase().includes(searchQuery.toLowerCase()))
     )
     .sort((a, b) => {
-      if (sortPrice === 'lowToHigh') {
+      if (sortPrice === "lowToHigh") {
         return a.productPrice - b.productPrice;
-      } else if (sortPrice === 'highToLow') {
+      } else if (sortPrice === "highToLow") {
         return b.productPrice - a.productPrice;
       }
       return 0;
@@ -84,18 +104,17 @@ const ProductScreen = ({ navigation }) => {
   };
 
   const goToProductDetails = (product) => {
-    navigation.navigate('ProductDetailScreen', { productId: product.productid });
+    navigation.navigate("ProductDetailScreen", {
+      productId: product.productid,
+    });
   };
 
   if (loading) {
     return <ActivityIndicator size="large" color="#0000ff" />;
   }
 
-
-
-
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: "#FBE8A5" }}>
       <TextInput
         style={styles.searchBox}
         placeholder="Search products..."
@@ -122,15 +141,17 @@ const ProductScreen = ({ navigation }) => {
           <Picker.Item label="Price: Low to High" value="lowToHigh" />
           <Picker.Item label="Price: High to Low" value="highToLow" />
         </Picker>
-
       </View>
 
       <FlatList
         data={filteredProducts}
         renderItem={({ item }) => (
-          <ProductCard product={item} onPress={() => goToProductDetails(item)} />
+          <ProductCard
+            product={item}
+            onPress={() => goToProductDetails(item)}
+          />
         )}
-        keyExtractor={item => item.productid}
+        keyExtractor={(item) => item.productid}
         numColumns={3}
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.5}
@@ -145,57 +166,59 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 10,
     elevation: 3,
-    backgroundColor: '#fff',
+    backgroundColor: "#F5BD02",
     shadowOffset: { width: 1, height: 1 },
-    shadowColor: '#333',
+    shadowColor: "#333",
     shadowOpacity: 0.3,
     shadowRadius: 2,
     padding: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 15
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 15,
   },
   selectedCategoryCard: {
-    backgroundColor: '#FFA07A', // Màu cam cho card được chọn
+    backgroundColor: "#FFA07A", // Màu cam cho card được chọn
   },
   selectedCategoryText: {
-    color: '#FFFFFF', // Màu chữ trắng khi được chọn
+    color: "#FFFFFF", // Màu chữ trắng khi được chọn
   },
   image: {
     width: 100,
     height: 100,
-    marginBottom: 8,
+    // marginBottom: 8,
+    resizeMode: "cover",
+    borderRadius: 10,
   },
   name: {
     fontSize: 14,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: "bold",
+    textAlign: "center",
     marginBottom: 5,
   },
   pickerContainer: {
-    alignItems: 'flex-end', // Căn `Picker` về phía bên phải
-    width: '100%', // Chiếm đủ chiều ngang của container cha
+    alignItems: "flex-end", // Căn `Picker` về phía bên phải
+    width: "100%", // Chiếm đủ chiều ngang của container cha
   },
 
   picker: {
     height: 50,
-    width: '30%', // Chiếm 50% chiều ngang của container cha
+    width: "30%", // Chiếm 50% chiều ngang của container cha
     // Không cần `alignItems` ở đây
     fontSize: 16,
   },
   price: {
     fontSize: 14,
-    color: '#333',
+    color: "#333",
   },
   searchBox: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderWidth: 1,
     paddingLeft: 8,
     margin: 10,
     borderRadius: 5,
-    backgroundColor: '#FFFFFF', // Màu nền trắng
-    color: '#000000', // Màu chữ đen
+    backgroundColor: "#FFFFFF", // Màu nền trắng
+    color: "#000000", // Màu chữ đen
     borderRadius: 10,
   },
   categoryContainer: {
@@ -210,17 +233,16 @@ const styles = StyleSheet.create({
   categoryCard: {
     flex: 1,
     padding: 10,
-    backgroundColor: '#f8f8f8',
+    backgroundColor: "#f8f8f8",
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: "#ddd",
     marginHorizontal: 5,
-    justifyContent: 'center', // Căn giữa nội dung theo trục dọc
-    alignItems: 'center', // Căn giữa nội dung theo trục ngang
+    justifyContent: "center", // Căn giữa nội dung theo trục dọc
+    alignItems: "center", // Căn giữa nội dung theo trục ngang
     borderRadius: 10,
   },
   categoryText: { fontSize: 16, color: "grey", fontWeight: "bold" },
-
 });
 
 export default ProductScreen;

@@ -231,6 +231,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     padding: 10,
+    backgroundColor: "#FBE8A5",
   },
   productImage: {
     width: 50, // Điều chỉnh kích thước phù hợp
@@ -246,7 +247,7 @@ const styles = StyleSheet.create({
   },
 
   productPrice: {
-    color: "#FAA300",
+    color: "#AB2330",
     marginRight: 30,
     marginLeft: 20,
     fontSize: 13,
@@ -264,41 +265,52 @@ const styles = StyleSheet.create({
   productName: {
     flex: 1,
   },
-  buttonsContainer: {
+  buttonContainer: {
     flexDirection: "row",
+    justifyContent: "space-evenly",
+    width: "100%",
+    marginTop: 20,
   },
   modalContainer: {
-    marginTop: 200,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
     marginHorizontal: 20,
+    backgroundColor: "#FBE8A5",
+    borderRadius: 20,
+    padding: 20,
+    borderWidth: 2,
+    borderColor: "#F5BD02",
   },
   input: {
     height: 40,
-    borderColor: "gray",
+    borderColor: "#AB2330",
     borderWidth: 1,
-    marginBottom: 10,
+    marginBottom: 20,
     borderRadius: 10,
     padding: 10,
-    fontSize: 13,
-    color: "#7D7C7C",
+    fontSize: 16,
+    backgroundColor: "#FFFFFF",
+    color: "#333",
+    width: "100%",
   },
   label: {
     fontWeight: "bold",
+    color: "#AB2330",
     marginTop: 10,
     marginBottom: 5,
+    fontSize: 16,
   },
-
   big_title: {
     textAlign: "center",
     marginBottom: 20,
-    fontSize: 20,
-    fontWeight: "700",
-    color: "#164863",
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#AB2330",
   },
-
   deleteButton: {
     borderRadius: 20,
   },
-
   button: {
     backgroundColor: "green",
     padding: 10,

@@ -19,8 +19,12 @@ const UserScreen = () => {
 
   return (
     <View style={styles.container}>
-      <QuoteList />
-      <QuoteForm onSubmit={handleSubmit} />
+      <View style={styles.subContainer}>
+        <QuoteList />
+      </View>
+      <View style={styles.subContainer}>
+        <QuoteForm onSubmit={handleSubmit} />
+      </View>
     </View>
   );
 };
@@ -30,5 +34,11 @@ export default UserScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#FBE8A5",
+  },
+  subContainer: {
+    flex: 2,
+    padding: 10,
+    margin: 5,
   },
 });

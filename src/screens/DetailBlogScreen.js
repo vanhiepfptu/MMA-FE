@@ -11,13 +11,16 @@ export default function DetailBlogScreen({ route }) {
   const { item } = route.params;
   const [news, setNews] = useState(false);
   const [loading, setLoading] = useState(false);
+
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY5N2FlZDZjNTk3MDQyNjdmN2JmMzIiLCJpYXQiOjE3MTA4NDg3NDl9.MrbIEIMRLLubryoHZgvTBGhQeC0L79ZSgtz1iWgZaVo";
+
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
+
   const goBack = () => {
     navigation.goBack();
   };
@@ -37,6 +40,7 @@ export default function DetailBlogScreen({ route }) {
       console.error("Error fetching news:", error);
     }
   };
+
   return (
     <>
       {loading ? (
@@ -63,7 +67,7 @@ export default function DetailBlogScreen({ route }) {
 const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
-    backgroundColor: "#FFF",
+    backgroundColor: "#FBE8A5",
   },
   container: {
     alignItems: "flex-start",

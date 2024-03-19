@@ -88,7 +88,7 @@ const QuotationStaffScreen = ({ onAddSuccess }) => {
           value={quotationManagedBy}
           onChangeText={setQuotationManagedBy}
         /> */}
-        <Button title="Add Quotation" onPress={handleSubmit} />
+        <Button color="#F5BD02" title="Add Quotation" onPress={handleSubmit} />
       </View>
     </View>
   );
@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
   formContainer: {
     padding: 20,
     flex: 1,
+    backgroundColor: "#FBE8A5",
   },
   input: {
     height: 40,
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   card: {
-    backgroundColor: "#fff",
+    backgroundColor: "#FBE8A5",
     // borderRadius: "5",
     boxShadow: "0 0 5 rgba(#124, 0)",
     overflow: "hidden",

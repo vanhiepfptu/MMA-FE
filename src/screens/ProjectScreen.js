@@ -58,7 +58,7 @@ const ProjectScreen = ({ navigation }) => {
             end: {moment(item.endDate).format("DD/MM/YYYY")}
           </Text>
           <Text style={styles.projectClient}>
-            client: {item.client.username}
+            client: {item.client?.username}
           </Text>
         </View>
       </View>
@@ -86,35 +86,49 @@ const ProjectScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#FBE8A5",
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     padding: 20,
     textAlign: "center",
+    color: "#AB2330",
+    backgroundColor: "#F5BD02",
   },
   listContent: {
-    paddingHorizontal: 4,
+    paddingHorizontal: 10,
   },
   projectItem: {
     flex: 1,
-    padding: 4, // Adjust padding as needed
+    padding: 8,
+    marginVertical: 5,
   },
   projectCard: {
-    backgroundColor: "#f8f8f8",
+    backgroundColor: "#FFFFFF",
     borderRadius: 10,
-    padding: 10,
-    // Add shadow or border as needed
+    padding: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   projectTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
+    color: "#AB2330",
+    marginBottom: 5,
   },
   projectDate: {
     fontSize: 14,
+    color: "#333",
+    marginBottom: 2,
   },
   projectClient: {
     fontSize: 14,
+    fontWeight: "bold",
+    color: "#F5BD02",
   },
 });
 

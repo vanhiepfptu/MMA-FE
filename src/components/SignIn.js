@@ -91,6 +91,7 @@ function SignIn({ route }) {
     try {
       const data = await loginUser();
       const token = data?.account.tokens[0];
+      console.log("token :", token);
       if (!token) {
         return;
       }

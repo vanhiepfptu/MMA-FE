@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, TextInput, Button, StyleSheet } from "react-native";
+import {
+  Text,
+  View,
+  TextInput,
+  Button,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { TouchableOpacity } from "react-native";
 import ManageProduct from "./ManageProduct";
@@ -75,74 +82,77 @@ const StaffScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.big_title}>Import New Product</Text>
-      <TextInput
-        placeholder="Product Name"
-        value={productName}
-        onChangeText={setProductName}
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Product Price"
-        value={productPrice}
-        onChangeText={handlePriceChange}
-        style={styles.input}
-        keyboardType="numeric"
-      />
-      <TextInput
-        placeholder="Imagelink"
-        value={productImage}
-        onChangeText={setProductImage}
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Product Size"
-        value={productSize}
-        onChangeText={setProductSize}
-        style={styles.input}
-      />
+    <ScrollView style={styles.container}>
+      <View>
+        <Text style={styles.big_title}>Import New Product</Text>
+        <TextInput
+          placeholder="Product Name"
+          value={productName}
+          onChangeText={setProductName}
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="Product Price"
+          value={productPrice}
+          onChangeText={handlePriceChange}
+          style={styles.input}
+          keyboardType="numeric"
+        />
+        <TextInput
+          placeholder="Imagelink"
+          value={productImage}
+          onChangeText={setProductImage}
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="Product Size"
+          value={productSize}
+          onChangeText={setProductSize}
+          style={styles.input}
+        />
 
-      <TextInput
-        placeholder="Product Quantity"
-        value={productQuantity}
-        onChangeText={handleQuantityChange}
-        style={styles.input}
-        keyboardType="numeric"
-      />
-      <TextInput
-        placeholder="Product Material"
-        value={productMaterial}
-        onChangeText={setProductMaterial}
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Product Description"
-        value={productDescription}
-        onChangeText={setProductDescription}
-        style={styles.input}
-        multiline
-      />
-
-      <Picker
-        selectedValue={productType}
-        onValueChange={(itemValue, itemIndex) => setProductType(itemValue)}
-        style={styles.picker}
-      >
-        <Picker.Item label="Light" value="Light" />
-        <Picker.Item label="Sofa" value="Sofa" />
-        <Picker.Item label="Table" value="Table" />
-        <Picker.Item label="Chair" value="Chair" />
-      </Picker>
-      <Text>Date Import: {dateImport}</Text>
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Submit</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={navigateToManageProduct}>
-        <Text style={styles.buttonText}>Manage Products</Text>
-      </TouchableOpacity>
-    </View>
+        <TextInput
+          placeholder="Product Quantity"
+          value={productQuantity}
+          onChangeText={handleQuantityChange}
+          style={styles.input}
+          keyboardType="numeric"
+        />
+        <TextInput
+          placeholder="Product Material"
+          value={productMaterial}
+          onChangeText={setProductMaterial}
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="Product Description"
+          value={productDescription}
+          onChangeText={setProductDescription}
+          style={styles.input}
+          multiline
+        />
+        <Picker
+          selectedValue={productType}
+          onValueChange={(itemValue, itemIndex) => setProductType(itemValue)}
+          style={styles.picker}
+        >
+          <Picker.Item label="Light" value="Light" />
+          <Picker.Item label="Sofa" value="Sofa" />
+          <Picker.Item label="Table" value="Table" />
+          <Picker.Item label="Chair" value="Chair" />
+        </Picker>
+        <Text>Date Import: {dateImport}</Text>
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <Text style={styles.buttonText}>Submit</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={navigateToManageProduct}
+        >
+          <Text style={styles.buttonText}>Manage Products</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 };
 
@@ -150,7 +160,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    marginTop: 30,
+    paddingBottom: 20,
+    backgroundColor: "#FBE8A5",
   },
   input: {
     height: 40,

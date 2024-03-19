@@ -47,12 +47,6 @@ const QuotationForm = ({ onSubmit }) => {
     getData();
   }, []);
 
-  // Giả sử đây là dữ liệu lấy từ API của bạn
-  // const items = [
-  //   { id: 1, name: "Item 1" },
-  //   { id: 2, name: "Item 2" },
-  //   { id: 3, name: "Item 3" },
-  // ];
   const postQuotationData = async (data) => {
     const token =
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY0ODg3NjJjZjM2OGRiY2VhMjJjMTciLCJpYXQiOjE3MTA1MjQ1MzR9.lqlRkPu-XQ55taKNmZ9v0RIHqFjDuduPV5ty3G7A-Xo";
@@ -159,7 +153,7 @@ const QuotationForm = ({ onSubmit }) => {
             >
               <Text style={styles.cell}>
                 {`${item.quotationName} - $${item.quotationPrice}`}{" "}
-                {selectedItems.includes(item.quotationId) ? " ✓" : ""}
+                {selectedItems.includes(item.quotationId) ? "✓" : ""}
               </Text>
               {/* <Checkbox
               value={selectedItems.includes(item.quotationId)}
@@ -178,7 +172,14 @@ const QuotationForm = ({ onSubmit }) => {
           onChangeText={setEmail}
         />
         {error ? <Text style={styles.error}>{error}</Text> : null}
-        <Button title="Gửi form" onPress={handleSubmit} />
+        {/* <Button
+          sytle={styles.inputForm}
+          title="Gửi form"
+          onPress={handleSubmit}
+        /> */}
+        <TouchableOpacity onPress={handleSubmit} style={styles.inputFormButton}>
+          <Text style={styles.inputFormButtonText}>Gửi form</Text>
+        </TouchableOpacity>
         {notifications ? (
           <Text style={styles.notification}>{notifications}</Text>
         ) : null}
@@ -193,7 +194,7 @@ const styles = StyleSheet.create({
   },
   card: {
     padding: 20,
-    backgroundColor: "#fff",
+    backgroundColor: "#F5BD02",
   },
   row: {
     flexDirection: "row",
@@ -232,6 +233,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginHorizontal: 10,
     alignItems: "center",
+  },
+  inputFormButton: {
+    backgroundColor: "#4CAF50",
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+    justifyContent: "center",
+    height: 40,
+    marginVertical: 10,
+  },
+  inputFormButtonText: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
 

@@ -19,8 +19,8 @@ export default function Card({ id, images, author, publishDate, deleteNews }) {
     try {
       const data = await AsyncStorage.getItem("Account");
       if (data) {
-        const token = JSON.parse(data?.account.tokens[0]);
-        setCheckRole(token);
+        const token = JSON.parse(data);
+        setCheckRole(token?.account.tokens[0]);
         return token;
       }
     } catch (error) {

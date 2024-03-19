@@ -62,7 +62,7 @@ export default function DetailNewScreen({ route }) {
 const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
-    backgroundColor: "#FFF",
+    backgroundColor: "#FBE8A5",
   },
   container: {
     alignItems: "flex-start",

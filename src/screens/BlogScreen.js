@@ -136,8 +136,13 @@ const BlogScreen = ({ navigation }) => {
     }
   };
   return (
-    <View className="flex-1" style={{ marginTop: top }}>
-      <Button title="Add Blogs" onPress={() => setModalVisible(true)} />
+    <View style={styles.container}>
+      <TouchableOpacity
+        onPress={() => setModalVisible(true)}
+        style={styles.button}
+      >
+        <Text style={styles.buttonText}>Add Blogs</Text>
+      </TouchableOpacity>
       <Modal
         animationType="slide"
         transparent={true}
@@ -147,7 +152,7 @@ const BlogScreen = ({ navigation }) => {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <TouchableOpacity onPress={pickImage} style={styles.button}>
-              <Text>Select Image</Text>
+              <Text style={styles.buttonText}>Select Image</Text>
             </TouchableOpacity>
             {/* <Button title="Select Image" onPress={pickImage} style={styles.button} /> */}
             {image && (
@@ -175,18 +180,18 @@ const BlogScreen = ({ navigation }) => {
               onChangeText={setNewNewsAuthor}
             />
             <TouchableOpacity onPress={addNews} style={styles.button}>
-              <Text>Add news</Text>
+              <Text style={styles.buttonText}>Add news</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => setModalVisible(false)}
               style={styles.button}
             >
-              <Text>Close</Text>
+              <Text style={styles.buttonText}>Close</Text>
             </TouchableOpacity>
           </View>
         </View>
       </Modal>
-      <Text>Blogs List</Text>
+      <Text style={styles.title}>Blogs List</Text>
       <View className="mb-2" />
       {loading ? (
         <Loading />
@@ -206,9 +211,18 @@ export default BlogScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: "flex-start",
+    backgroundColor: "#F5BD02",
   },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#AB2330",
+    textAlign: "center",
+    marginVertical: 20,
+  },
+
+  //MODAL
   centeredView: {
     flex: 1,
     justifyContent: "center",
@@ -217,7 +231,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     width: "80%",
-    backgroundColor: "white",
+    backgroundColor: "#FBE8A5",
     borderRadius: 20,
     padding: 35,
     alignItems: "center",
@@ -233,22 +247,46 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center",
+    color: "#AB2330",
   },
   input: {
     width: "100%",
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "#FFF",
     paddingHorizontal: 15,
     paddingVertical: 10,
-    borderRadius: 4,
+    borderRadius: 20,
     marginBottom: 10,
-    fontSize: 14,
+    fontSize: 16,
     color: "#333",
+    borderWidth: 1,
+    borderColor: "#AB2330",
   },
   button: {
-    backgroundColor: "#91caff",
-    paddingVertical: 10,
+    backgroundColor: "#F5BD02",
+    paddingVertical: 12,
     paddingHorizontal: 20,
-    borderRadius: 4,
+    borderRadius: 20,
     marginBottom: 10,
+    minWidth: "50%",
+    elevation: 2,
+    borderWidth: 1,
+    borderColor: "#AB2330",
   },
+  buttonText: {
+    fontSize: 14,
+    color: "#AB2330",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  // button: {
+  //   backgroundColor: "#F5BD02",
+  //   padding: 10,
+  //   marginVertical: 10,
+  //   borderRadius: 5,
+  //   alignSelf: "center",
+  // },
+  // buttonText: {
+  //   color: "#AB2330",
+  //   fontSize: 16,
+  // },
 });

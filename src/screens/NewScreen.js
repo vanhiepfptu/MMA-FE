@@ -136,8 +136,13 @@ const NewsScreen = ({ navigation }) => {
     }
   };
   return (
-    <View className="flex-1" style={{ marginTop: top }}>
-      <Button title="Add News" onPress={() => setModalVisible(true)} />
+    <View style={styles.container}>
+      <TouchableOpacity
+        onPress={() => setModalVisible(true)}
+        style={styles.button}
+      >
+        <Text style={styles.buttonText}>Add News</Text>
+      </TouchableOpacity>
       <Modal
         animationType="slide"
         transparent={true}
@@ -147,7 +152,7 @@ const NewsScreen = ({ navigation }) => {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <TouchableOpacity onPress={pickImage} style={styles.button}>
-              <Text>Select Image</Text>
+              <Text style={styles.buttonText}>Select Image</Text>
             </TouchableOpacity>
             {/* <Button title="Select Image" onPress={pickImage} style={styles.button} /> */}
             {image && (
@@ -175,18 +180,18 @@ const NewsScreen = ({ navigation }) => {
               onChangeText={setNewNewsAuthor}
             />
             <TouchableOpacity onPress={addNews} style={styles.button}>
-              <Text>Add news</Text>
+              <Text style={styles.buttonText}>Add news</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => setModalVisible(false)}
               style={styles.button}
             >
-              <Text>Close</Text>
+              <Text style={styles.buttonText}>Close</Text>
             </TouchableOpacity>
           </View>
         </View>
       </Modal>
-      <Text>News List</Text>
+      <Text style={styles.title}>News List</Text>
       <View className="mb-2" />
       {loading ? (
         <Loading />
@@ -206,8 +211,21 @@ export default NewsScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: "flex-start",
+    backgroundColor: "#F5BD02",
+  },
+  buttonText: {
+    fontSize: 14,
+    color: "#AB2330",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#AB2330",
+    textAlign: "center",
+    marginVertical: 20,
   },
   centeredView: {
     flex: 1,
@@ -217,7 +235,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     width: "80%",
-    backgroundColor: "white",
+    backgroundColor: "#FBE8A5",
     borderRadius: 20,
     padding: 35,
     alignItems: "center",
@@ -233,22 +251,29 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center",
+    color: "#AB2330",
   },
   input: {
     width: "100%",
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "#FFF",
     paddingHorizontal: 15,
     paddingVertical: 10,
-    borderRadius: 4,
+    borderRadius: 20,
     marginBottom: 10,
-    fontSize: 14,
+    fontSize: 16,
     color: "#333",
+    borderWidth: 0.5,
+    borderColor: "#AB2330",
   },
   button: {
-    backgroundColor: "#91caff",
-    paddingVertical: 10,
+    backgroundColor: "#F5BD02",
+    paddingVertical: 12,
     paddingHorizontal: 20,
-    borderRadius: 4,
+    borderRadius: 20,
     marginBottom: 10,
+    minWidth: "50%",
+    elevation: 2,
+    borderWidth: 1,
+    borderColor: "#AB2330",
   },
 });

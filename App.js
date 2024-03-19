@@ -172,7 +172,7 @@ function StaffOverView() {
             title: "Manage Product",
             tabBarLabel: "Manage Product",
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="home" size={size} color={color} />
+              <Ionicons name="settings" size={size} color={color} />
             ),
           }}
         ></BottomTabs.Screen>
@@ -248,7 +248,7 @@ function UserOverView() {
             title: "Products Menu",
             tabBarLabel: "Menu",
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="home" size={size} color={color} />
+              <Ionicons name="basket" size={size} color={color} />
             ),
           }}
         ></BottomTabs.Screen>
@@ -307,7 +307,7 @@ export default function App() {
       <StatusBar style="light" />
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="SignIn"
+          initialRouteName="Home"
           screenOptions={({ navigation }) => ({
             headerStyle: { backgroundColor: "#F5BD02" },
             headerTintColor: "#AB2330",

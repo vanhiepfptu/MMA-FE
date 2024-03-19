@@ -41,22 +41,6 @@ function AccountDetail() {
     }
   }, [isFocus]);
 
-  // const account = {
-  //   _id: "65e861e92b5eea2855642b3b",
-  //   firstName: "Duy",
-  //   lastName: "Hieu",
-  //   dateOfBirth: "2023-01-01T00:00:00.000Z",
-  //   username: "admin02",
-  //   email: "admin02@gmail.com",
-  //   address: "120 nguyễn tri phương, p7, tp.vũng tàu",
-  //   phone: "0369776640",
-  //   roleId: "65ddd26e7298f652b9db91b2",
-  //   status: "active",
-  //   lastLogin: "2024-03-18T08:24:33.270Z",
-  //   createdAt: "2024-03-06T12:30:33.597Z",
-  //   updatedAt: "2024-03-18T08:24:33.274Z",
-  // };
-
   const handleSignOut = () => {
     openModal(true);
   };
@@ -202,11 +186,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22,
+    backgroundColor: "rgba(0,0,0,0.5)", // Overlay effect
   },
   modalView: {
     margin: 20,
-    backgroundColor: "#FFFF",
+    backgroundColor: "#FBE8A5", // Light Yellow for modal background
     borderRadius: 20,
     padding: 35,
     alignItems: "center",
@@ -220,10 +204,10 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   modalText: {
-    fontSize: 15,
+    fontSize: 16,
     marginBottom: 15,
     textAlign: "center",
-    color: "#AB2330",
+    color: "#AB2330", // Red for text to draw attention
   },
   buttonContainer: {
     flexDirection: "row",
@@ -231,12 +215,16 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   button: {
-    backgroundColor: "#F5BD02",
-    padding: 10,
-    borderRadius: 6,
+    backgroundColor: "#F5BD02", // Yellow for buttons to stand out
+    padding: 12,
+    borderRadius: 20,
+    elevation: 2,
+    marginHorizontal: 5,
   },
   buttonText: {
-    fontSize: 12,
-    color: "#AB2330",
+    fontSize: 14,
+    color: "#AB2330", // Red for button text for contrast and readability
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
