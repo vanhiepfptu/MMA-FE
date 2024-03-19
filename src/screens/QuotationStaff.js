@@ -12,7 +12,7 @@ const QuotationStaffScreen = ({ onAddSuccess }) => {
   const [quotationManagedBy, setQuotationManagedBy] = useState("");
   const id = "65f488762cf368dbcea22c17";
   const admin_token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWU4NjFlOTJiNWVlYTI4NTU2NDJiM2IiLCJpYXQiOjE3MDk3MjgyMzN9.PlJnL2HO8BExwcleE-aZP5L5c45njL0RDk1jKmaYyXg";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY5ODA1YTBkYzc5MDgzZjFhYmJkYTciLCJpYXQiOjE3MTA4NTAxMzh9.y8158XhPNg3jDPAZKpS8sw7k8fEBAy-fUQTnmXHR4-E";
   const handleRefresh = () => {
     setRefreshKey((prevKey) => prevKey + 1);
   };
@@ -45,7 +45,7 @@ const QuotationStaffScreen = ({ onAddSuccess }) => {
       console.log(result);
       alert("Quotation added successfully!");
       handleRefresh();
-    //   onAddSuccess();
+      //   onAddSuccess();
     } catch (error) {
       console.error(error);
       alert("Error adding quotation");

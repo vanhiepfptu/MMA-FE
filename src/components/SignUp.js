@@ -1,20 +1,16 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
-  View,
-  Text,
-  TextInput,
   Button,
-  StyleSheet,
+  Dimensions,
   ImageBackground,
   Pressable,
   ScrollView,
-  Dimensions,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
 } from "react-native";
-import {
-  useFocusEffect,
-  useIsFocused,
-  useNavigation,
-} from "@react-navigation/native";
 import { REGISTER } from "../constants/api";
 
 const screenHeight = Dimensions.get("window").height;

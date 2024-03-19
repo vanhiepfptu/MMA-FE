@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { View, Image, Text, TouchableOpacity } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import Loading from "../components/Loading";
 import { API_NEWS } from "../constants/api";
 const API_URL = API_NEWS;
@@ -14,7 +12,7 @@ export default function DetailNewScreen({ route }) {
   const [news, setNews] = useState(false);
   const [loading, setLoading] = useState(false);
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWU4Yjc3NWMzMWY1MGM5ZTNiZWM3NDMiLCJpYXQiOjE3MDk3NTAxMzN9.cQM3-hYgTDG_59_HvNkZQ7qeSZWrWHl1aLAC699A_2I";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY5N2FlZDZjNTk3MDQyNjdmN2JmMzIiLCJpYXQiOjE3MTA4NDg3NDl9.MrbIEIMRLLubryoHZgvTBGhQeC0L79ZSgtz1iWgZaVo";
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,

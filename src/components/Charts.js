@@ -7,9 +7,9 @@ import { ProgressCircle } from "react-native-svg-charts";
 const screenWidth = Dimensions.get("window").width;
 
 const ADMIN_TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWU4NjFlOTJiNWVlYTI4NTU2NDJiM2IiLCJpYXQiOjE3MDk3MjgyMzN9.PlJnL2HO8BExwcleE-aZP5L5c45njL0RDk1jKmaYyXg";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY5ODA1YTBkYzc5MDgzZjFhYmJkYTciLCJpYXQiOjE3MTA4NTAxMzh9.y8158XhPNg3jDPAZKpS8sw7k8fEBAy-fUQTnmXHR4-E";
 const STAFF_TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWU4Yjc3NWMzMWY1MGM5ZTNiZWM3NDMiLCJpYXQiOjE3MDk3NTAxMzN9.cQM3-hYgTDG_59_HvNkZQ7qeSZWrWHl1aLAC699A_2I";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY5N2FlZDZjNTk3MDQyNjdmN2JmMzIiLCJpYXQiOjE3MTA4NDg3NDl9.MrbIEIMRLLubryoHZgvTBGhQeC0L79ZSgtz1iWgZaVo";
 
 function Charts() {
   [quotations, setQuotations] = useState();
@@ -62,7 +62,6 @@ function Charts() {
       const data = await response.json();
       setQuotations(data.data);
       setAmount(data.data.length);
-      console.log("Data:", data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -72,7 +71,6 @@ function Charts() {
     if (isFocus) {
       getAllQuotation();
     }
-    console.log("Quantity :", amount);
   }, [isFocus]);
 
   return (

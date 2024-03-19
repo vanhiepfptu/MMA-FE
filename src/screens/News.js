@@ -1,24 +1,20 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  FlatList,
-  Image,
-  Alert,
-  TouchableOpacity,
-  StyleSheet,
-  Modal,
-} from "react-native";
-import * as ImagePicker from "expo-image-picker";
 import axios from "axios";
-import { firebase } from "../constants/firebase.configs";
-import { API_NEWS } from "../constants/api";
-const API_URL = API_NEWS;
+import * as ImagePicker from "expo-image-picker";
+import React, { useEffect, useState } from "react";
+import {
+  Alert,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Loading from "./../components/Loading";
 import Card from "../components/Card";
+import { API_NEWS } from "../constants/api";
+import { firebase } from "../constants/firebase.configs";
+import Loading from "./../components/Loading";
+const API_URL = API_NEWS;
 const News = ({ navigation }) => {
   const { top } = useSafeAreaInsets();
   const [news, setNews] = useState([]);
@@ -29,7 +25,7 @@ const News = ({ navigation }) => {
   const [newNewsAuthor, setNewNewsAuthor] = useState("");
   const [image, setImage] = useState(null);
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWU4Yjc3NWMzMWY1MGM5ZTNiZWM3NDMiLCJpYXQiOjE3MDk3NTAxMzN9.cQM3-hYgTDG_59_HvNkZQ7qeSZWrWHl1aLAC699A_2I";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY5N2FlZDZjNTk3MDQyNjdmN2JmMzIiLCJpYXQiOjE3MTA4NDg3NDl9.MrbIEIMRLLubryoHZgvTBGhQeC0L79ZSgtz1iWgZaVo";
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,

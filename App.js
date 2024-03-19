@@ -36,6 +36,7 @@ import ProductControl from "./src/screens/ProductControl";
 import ManageProduct from "./src/screens/ManageProduct";
 import News from "./src/screens/News";
 import Blogs from "./src/screens/Blogs";
+import AccountDetail from "./src/screens/AccountDetail";
 
 // Create the stack navigator
 const Stack = createNativeStackNavigator();
@@ -49,18 +50,6 @@ function HomeScreen({ navigation }) {
       <StatusBar style="light" />
       <View style={styles.container}>
         <Button
-          title="Go to User Screen"
-          onPress={() => navigation.navigate("Báo giá chuẩn")}
-        />
-        <Button
-          title="Go to Staff Screen"
-          onPress={() => navigation.navigate("StaffOverView")}
-        />
-        <Button
-          title="Go to Chart Screen"
-          onPress={() => navigation.navigate("Chart")}
-        />
-        <Button
           title="Go to SignIn Screen"
           onPress={() => navigation.navigate("SignIn")}
         />
@@ -68,23 +57,17 @@ function HomeScreen({ navigation }) {
           title="Go to SignUp Screen"
           onPress={() => navigation.navigate("SignUp")}
         />
-
         <Button
-          title="Product"
-          onPress={() => navigation.navigate("Product")}
-        />
-
-        <Button
-          title="New Product"
-          onPress={() => navigation.navigate("ProductControl")}
+          title="Go to Staff Screen"
+          onPress={() => navigation.navigate("StaffOverView")}
         />
         <Button
-          title="Edit Product"
-          onPress={() => navigation.navigate("ManageProduct")}
+          title="Go to Admin Screen"
+          onPress={() => navigation.navigate("AdminOverView")}
         />
         <Button
-          title="Project"
-          onPress={() => navigation.navigate("Project")}
+          title="Go to User Screen"
+          onPress={() => navigation.navigate("UserOverView")}
         />
       </View>
     </>
@@ -93,31 +76,10 @@ function HomeScreen({ navigation }) {
 
 //ADMIN
 function AdminOverView() {
-  const [modalVisible, setModalVisible] = React.useState(false);
   const navigation = useNavigation();
 
-  function openModal() {
-    setModalVisible(true);
-  }
-
-  function handleConfirm() {
-    handleLogout();
-    setModalVisible(false);
-  }
-
-  function handleCancel() {
-    setModalVisible(false);
-  }
-
-  function handleLogout() {
-    AsyncStorage.removeItem("Account")
-      .then(() => {
-        console.log("Account removed from storage.");
-        navigation.navigate("SignIn");
-      })
-      .catch((error) =>
-        console.error("Failed to remove account from storage", error)
-      );
+  function handleSignOut() {
+    navigation.navigate("AccountDetail");
   }
 
   return (
@@ -128,10 +90,10 @@ function AdminOverView() {
           headerTintColor: "#AB2330",
           headerRight: ({ tintColor }) => (
             <IconButton
-              icon="log-out"
+              icon="person"
               size={24}
               color={tintColor}
-              onPress={openModal}
+              onPress={handleSignOut}
             ></IconButton>
           ),
           tabBarStyle: { backgroundColor: "#AB2330" },
@@ -139,17 +101,17 @@ function AdminOverView() {
           tabBarInactiveTintColor: "#fff",
         })}
       >
-        {/* <BottomTabs.Screen
-        name="AdminScreen"
-        component={AdminScreen}
-        options={{
-          title: "Admin Screen",
-          tabBarLabel: "Admin",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home" size={size} color={color} />
-          ),
-        }}
-      ></BottomTabs.Screen> */}
+        <BottomTabs.Screen
+          name="AdminScreen"
+          component={AdminScreen}
+          options={{
+            title: "Manage Accounts",
+            tabBarLabel: "Manage Accounts",
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="home" size={size} color={color} />
+            ),
+          }}
+        ></BottomTabs.Screen>
         <BottomTabs.Screen
           name="ChartScreen"
           component={Charts}
@@ -162,52 +124,16 @@ function AdminOverView() {
           }}
         ></BottomTabs.Screen>
       </BottomTabs.Navigator>
-      <Modal animationType="slide" transparent={true} visible={modalVisible}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Bạn muốn đăng xuất ?</Text>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.button} onPress={handleConfirm}>
-                <Text style={styles.buttonText}>Chấp nhận</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={handleCancel}>
-                <Text style={styles.buttonText}>Hủy bỏ</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
     </>
   );
 }
 
 //STAFF
 function StaffOverView() {
-  const [modalVisible, setModalVisible] = React.useState(false);
   const navigation = useNavigation();
 
-  function openModal() {
-    setModalVisible(true);
-  }
-
-  function handleConfirm() {
-    handleLogout();
-    setModalVisible(false);
-  }
-
-  function handleCancel() {
-    setModalVisible(false);
-  }
-
-  function handleLogout() {
-    AsyncStorage.removeItem("Account")
-      .then(() => {
-        console.log("Account removed from storage.");
-        navigation.navigate("SignIn");
-      })
-      .catch((error) =>
-        console.error("Failed to remove account from storage", error)
-      );
+  function handleSignOut() {
+    navigation.navigate("AccountDetail");
   }
   return (
     <>
@@ -217,10 +143,10 @@ function StaffOverView() {
           headerTintColor: "#AB2330",
           headerRight: ({ tintColor }) => (
             <IconButton
-              icon="log-out"
+              icon="person"
               size={24}
               color={tintColor}
-              onPress={openModal}
+              onPress={handleSignOut}
             ></IconButton>
           ),
           tabBarStyle: { backgroundColor: "#AB2330" },
@@ -251,17 +177,6 @@ function StaffOverView() {
           }}
         ></BottomTabs.Screen>
         <BottomTabs.Screen
-          name="StaffNews"
-          component={NewsScreen}
-          options={{
-            title: "News",
-            tabBarLabel: "News",
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="newspaper-outline" size={size} color={color} />
-            ),
-          }}
-        ></BottomTabs.Screen>
-        <BottomTabs.Screen
           name="StaffQuotations"
           component={QuotationStaffScreen}
           options={{
@@ -272,6 +187,18 @@ function StaffOverView() {
             ),
           }}
         ></BottomTabs.Screen>
+        <BottomTabs.Screen
+          name="StaffNews"
+          component={NewsScreen}
+          options={{
+            title: "News",
+            tabBarLabel: "News",
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="newspaper-outline" size={size} color={color} />
+            ),
+          }}
+        ></BottomTabs.Screen>
+
         <BottomTabs.Screen
           name="StaffBlogs"
           component={BlogScreen}
@@ -284,52 +211,16 @@ function StaffOverView() {
           }}
         ></BottomTabs.Screen>
       </BottomTabs.Navigator>
-      <Modal animationType="slide" transparent={true} visible={modalVisible}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Bạn muốn đăng xuất ?</Text>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.button} onPress={handleConfirm}>
-                <Text style={styles.buttonText}>Chấp nhận</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={handleCancel}>
-                <Text style={styles.buttonText}>Hủy bỏ</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
     </>
   );
 }
 
 //USER
 function UserOverView() {
-  const [modalVisible, setModalVisible] = React.useState(false);
   const navigation = useNavigation();
 
-  function openModal() {
-    setModalVisible(true);
-  }
-
-  function handleConfirm() {
-    handleLogout();
-    setModalVisible(false);
-  }
-
-  function handleCancel() {
-    setModalVisible(false);
-  }
-
-  function handleLogout() {
-    AsyncStorage.removeItem("Account")
-      .then(() => {
-        console.log("Account removed from storage.");
-        navigation.navigate("SignIn");
-      })
-      .catch((error) =>
-        console.error("Failed to remove account from storage", error)
-      );
+  function handleSignOut() {
+    navigation.navigate("AccountDetail");
   }
   return (
     <>
@@ -339,10 +230,10 @@ function UserOverView() {
           headerTintColor: "#AB2330",
           headerRight: ({ tintColor }) => (
             <IconButton
-              icon="log-out"
+              icon="person"
               size={24}
               color={tintColor}
-              onPress={openModal}
+              onPress={handleSignOut}
             ></IconButton>
           ),
           tabBarStyle: { backgroundColor: "#AB2330" },
@@ -376,29 +267,36 @@ function UserOverView() {
           name="Project"
           component={ProjectScreen}
           options={{
-            title: "Project",
-            tabBarLabel: "Project",
+            title: "Typical Projects",
+            tabBarLabel: "Typical Projects",
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="podium" size={size} color={color} />
+              <Ionicons name="document" size={size} color={color} />
+            ),
+          }}
+        ></BottomTabs.Screen>
+        <BottomTabs.Screen
+          name="News"
+          component={News}
+          options={{
+            title: "News",
+            tabBarLabel: "News",
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="newspaper-outline" size={size} color={color} />
+            ),
+          }}
+        ></BottomTabs.Screen>
+        <BottomTabs.Screen
+          name="Blogs"
+          component={Blogs}
+          options={{
+            title: "Blogs",
+            tabBarLabel: "Blogs",
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="book-outline" size={size} color={color} />
             ),
           }}
         ></BottomTabs.Screen>
       </BottomTabs.Navigator>
-      <Modal animationType="slide" transparent={true} visible={modalVisible}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Bạn muốn đăng xuất ?</Text>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.button} onPress={handleConfirm}>
-                <Text style={styles.buttonText}>Chấp nhận</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={handleCancel}>
-                <Text style={styles.buttonText}>Hủy bỏ</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
     </>
   );
 }
@@ -413,16 +311,45 @@ export default function App() {
           screenOptions={({ navigation }) => ({
             headerStyle: { backgroundColor: "#F5BD02" },
             headerTintColor: "#AB2330",
-            // headerRight: ({ tintColor }) => (
-            //   <IconButton
-            //     icon="log-out"
-            //     size={24}
-            //     color={tintColor}
-            //     onPress={openModal}
-            //   ></IconButton>
-            // ),
           })}
         >
+          <Stack.Screen
+            name="SignIn"
+            component={SignIn}
+            options={{ headerShown: false }}
+          ></Stack.Screen>
+          <Stack.Screen
+            name="SignUp"
+            component={SignUp}
+            options={{ headerShown: false }}
+          ></Stack.Screen>
+          <Stack.Screen
+            name="AdminOverView"
+            component={AdminOverView}
+            options={{ headerShown: false }}
+          ></Stack.Screen>
+          <Stack.Screen
+            name="StaffOverView"
+            component={StaffOverView}
+            options={{ headerShown: false }}
+          ></Stack.Screen>
+          <Stack.Screen
+            name="UserOverView"
+            component={UserOverView}
+            options={{ headerShown: false }}
+          ></Stack.Screen>
+          <Stack.Screen
+            name="ProductDetailScreen"
+            component={ProductDetailScreen}
+          />
+          <Stack.Screen
+            name="StaffQuotations"
+            component={QuotationStaffScreen}
+          />
+          <Stack.Screen
+            name="AccountDetail"
+            component={AccountDetail}
+          ></Stack.Screen>
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Báo giá chuẩn" component={UserScreen} />
           <Stack.Screen name="Staff" component={StaffScreen} />
@@ -436,42 +363,6 @@ export default function App() {
           <Stack.Screen name="DetailBlog" component={DetailBlogScreen} />
           <Stack.Screen name="Project" component={ProjectScreen} />
           <Stack.Screen name="DetailProject" component={DetailProjectScreen} />
-          <Stack.Screen
-            name="SignIn"
-            component={SignIn}
-            options={{ headerShown: false }}
-          ></Stack.Screen>
-          <Stack.Screen
-            name="SignUp"
-            component={SignUp}
-            options={{ headerShown: false }}
-          ></Stack.Screen>
-          <Stack.Screen
-            name="ProductDetailScreen"
-            component={ProductDetailScreen}
-          />
-          <Stack.Screen
-            name="AdminOverView"
-            component={AdminOverView}
-            options={{ headerShown: false }}
-          ></Stack.Screen>
-          <Stack.Screen
-            name="StaffOverView"
-            component={StaffOverView}
-            options={({ navigation }) => ({
-              headerShown: false,
-            })}
-          ></Stack.Screen>
-
-          <Stack.Screen
-            name="UserOverView"
-            component={UserOverView}
-            options={{ headerShown: false }}
-          ></Stack.Screen>
-          <Stack.Screen
-            name="StaffQuotations"
-            component={QuotationStaffScreen}
-          />
         </Stack.Navigator>
       </NavigationContainer>
     </>

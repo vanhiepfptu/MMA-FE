@@ -1,7 +1,8 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
   Button,
-  Image,
   ImageBackground,
   Pressable,
   StyleSheet,
@@ -9,19 +10,13 @@ import {
   TextInput,
   View,
 } from "react-native";
-import {
-  useFocusEffect,
-  useIsFocused,
-  useNavigation,
-} from "@react-navigation/native";
 import { LOGIN } from "../constants/api";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function SignIn({ route }) {
   const ADMIN_TOKEN =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWU4NjFlOTJiNWVlYTI4NTU2NDJiM2IiLCJpYXQiOjE3MDk3MjgyMzN9.PlJnL2HO8BExwcleE-aZP5L5c45njL0RDk1jKmaYyXg";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY5ODA1YTBkYzc5MDgzZjFhYmJkYTciLCJpYXQiOjE3MTA4NTAxMzh9.y8158XhPNg3jDPAZKpS8sw7k8fEBAy-fUQTnmXHR4-E";
   const STAFF_TOKEN =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWU4Yjc3NWMzMWY1MGM5ZTNiZWM3NDMiLCJpYXQiOjE3MDk3NTAxMzN9.cQM3-hYgTDG_59_HvNkZQ7qeSZWrWHl1aLAC699A_2I";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY5N2FlZDZjNTk3MDQyNjdmN2JmMzIiLCJpYXQiOjE3MTA4NDg3NDl9.MrbIEIMRLLubryoHZgvTBGhQeC0L79ZSgtz1iWgZaVo";
 
   const navigation = useNavigation();
 
@@ -76,15 +71,13 @@ function SignIn({ route }) {
         throw new Error("Failed to register user");
       }
       const data = await response.json();
-      console.log("1 Login successfully:", data?.account.firstName);
+      console.log(" Login successfully:", data);
+      //set AsyncStorage
       await AsyncStorage.setItem("Account", JSON.stringify(data));
       setLogin({
         username: "",
         password: "",
       });
-      //set AsyncStorage
-      await AsyncStorage.setItem("Account", JSON.stringify(data));
-      navigation.navigate("StaffOverView");
       if (!response.ok) {
         throw new Error("Failed to register user");
       }
@@ -98,18 +91,14 @@ function SignIn({ route }) {
     try {
       const data = await loginUser();
       const token = data?.account.tokens[0];
-      console.log("2 Account Token :", token);
       if (!token) {
         return;
       }
       if (token === ADMIN_TOKEN) {
-        console.log("ADMIN SCREEN");
         navigation.navigate("AdminOverView");
       } else if (token === STAFF_TOKEN) {
-        console.log("STAFF SCREEN");
         navigation.navigate("StaffOverView");
       } else {
-        console.log("USER SCREEN");
         navigation.navigate("UserOverView");
       }
     } catch (error) {
@@ -141,7 +130,21 @@ function SignIn({ route }) {
         />
 
         <Button color="#F5BD02" title="Sign in" onPress={handleSignIn} />
-
+        <View style={{ marginTop: 5, alignSelf: "flex-start" }}>
+          <Pressable onPress={() => {}}>
+            {({ pressed }) => (
+              <Text
+                style={[
+                  styles.signUpText,
+                  styles.signUpButtonText,
+                  pressed && styles.pressed,
+                ]}
+              >
+                Forgot password?
+              </Text>
+            )}
+          </Pressable>
+        </View>
         <View style={styles.signUpContainer}>
           <Text style={styles.signUpText}>You do not have an account? </Text>
           <Pressable onPress={() => navigation.navigate("SignUp")}>

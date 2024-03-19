@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useEffect, useState } from "react";
 import {
-  View,
+  Button,
+  ScrollView,
+  StyleSheet,
   Text,
   TextInput,
-  Button,
-  StyleSheet,
   TouchableOpacity,
-  ScrollView,
+  View,
 } from "react-native";
 import { GET_ALL_QUOTAIOTIONS, backend_host } from "../constants/api";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Checkbox } from "react-native-paper";
 // import { ScrollView } from "react-native-web";
 
 const QuotationForm = ({ onSubmit }) => {
@@ -19,9 +18,9 @@ const QuotationForm = ({ onSubmit }) => {
   const [error, setError] = useState("");
   const [userToken, setUserToken] = useState("");
   const ADMIN_TOKEN =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWU4NjFlOTJiNWVlYTI4NTU2NDJiM2IiLCJpYXQiOjE3MDk3MjgyMzN9.PlJnL2HO8BExwcleE-aZP5L5c45njL0RDk1jKmaYyXg";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY5ODA1YTBkYzc5MDgzZjFhYmJkYTciLCJpYXQiOjE3MTA4NTAxMzh9.y8158XhPNg3jDPAZKpS8sw7k8fEBAy-fUQTnmXHR4-E";
   const STAFF_TOKEN =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWU4Yjc3NWMzMWY1MGM5ZTNiZWM3NDMiLCJpYXQiOjE3MDk3NTAxMzN9.cQM3-hYgTDG_59_HvNkZQ7qeSZWrWHl1aLAC699A_2I";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY5N2FlZDZjNTk3MDQyNjdmN2JmMzIiLCJpYXQiOjE3MTA4NDg3NDl9.MrbIEIMRLLubryoHZgvTBGhQeC0L79ZSgtz1iWgZaVo";
   // const token =
   //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY0ODg3NjJjZjM2OGRiY2VhMjJjMTciLCJpYXQiOjE3MTA1MjQ1MzR9.lqlRkPu-XQ55taKNmZ9v0RIHqFjDuduPV5ty3G7A-Xo";
 

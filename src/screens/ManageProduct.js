@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
-  View,
-  Text,
+  Alert,
   Button,
   FlatList,
-  StyleSheet,
-  Alert,
+  Image,
   Modal,
+  StyleSheet,
+  Text,
   TextInput,
+  View,
 } from "react-native";
-import { Image } from "react-native";
-import { TouchableOpacity } from "react-native";
 import { host } from "../constants/api";
 
 function ManageProduct() {
@@ -21,7 +20,7 @@ function ManageProduct() {
   const [totalPages, setTotalPages] = useState(0);
 
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWU4Yjc3NWMzMWY1MGM5ZTNiZWM3NDMiLCJpYXQiOjE3MDk3NTAxMzN9.cQM3-hYgTDG_59_HvNkZQ7qeSZWrWHl1aLAC699A_2I";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY5N2FlZDZjNTk3MDQyNjdmN2JmMzIiLCJpYXQiOjE3MTA4NDg3NDl9.MrbIEIMRLLubryoHZgvTBGhQeC0L79ZSgtz1iWgZaVo";
 
   useEffect(() => {
     fetchProducts();
