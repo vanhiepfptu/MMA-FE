@@ -10,7 +10,7 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { LOGIN } from "../constants/api";
+import { Geny, LOGIN, backend_host } from "../constants/api";
 
 function SignIn({ route }) {
   const ADMIN_TOKEN =
@@ -132,7 +132,28 @@ function SignIn({ route }) {
 
         <Button color="#F5BD02" title="Sign in" onPress={handleSignIn} />
         <View style={{ marginTop: 5, alignSelf: "flex-start" }}>
-          <Pressable onPress={() => {}}>
+          <Pressable
+            onPress={async () => {
+              try {
+                console.log("1: ", login.username);
+                const response = await fetch(
+                  `http://${backend_host}:5000/api/accounts/requestPasswordReset`,
+                  {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ username: login.username }),
+                  }
+                );
+                if (response.ok) {
+                  console.log("Reset successfully");
+                }
+              } catch (error) {
+                console.log(error);
+              }
+            }}
+          >
             {({ pressed }) => (
               <Text
                 style={[

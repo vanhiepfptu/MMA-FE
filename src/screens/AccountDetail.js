@@ -64,7 +64,7 @@ function AccountDetail() {
     AsyncStorage.removeItem("Account")
       .then(() => {
         console.log("Account removed from storage.");
-        navigation.navigate("Home"); //EDIT
+        navigation.navigate("SignIn");
       })
       .catch((error) =>
         console.error("Failed to remove account from storage", error)
