@@ -108,7 +108,7 @@ function SignUp({}) {
           />
           <TextInput
             style={styles.input}
-            placeholder="Date Of Birth"
+            placeholder="Date Of Birth (YYYY-MM-DD)"
             placeholderTextColor="#fff"
             value={register.dateOfBirth}
             onChangeText={inputChangedHandler.bind(this, "dateOfBirth")}

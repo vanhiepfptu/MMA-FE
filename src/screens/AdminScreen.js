@@ -147,6 +147,7 @@ function AdminScreen() {
         );
       }
       const result = await response.json();
+      getALlAccounts();
       console.log("Account deleted successfully:", result);
       //   Alert.alert("Success", "Delete successfully !");
       return result;
@@ -183,6 +184,7 @@ function AdminScreen() {
           `Error! status: ${response.status}, ${response.statusText}`
         );
       }
+      getALlAccounts();
       setEditFormData({
         accountId: "",
         firstName: "",
@@ -390,7 +392,7 @@ function AdminScreen() {
                 style={[styles.button, styles.buttonUpdate]}
                 onPress={() => {
                   updateAccount();
-                  getALlAccounts();
+
                   console.log("Updating account with: ", editFormData);
                   setIsEditModalVisible(!isEditModalVisible);
                 }}

@@ -74,7 +74,7 @@ function ManageProduct() {
       };
 
       const response = await fetch(
-        `http://10.0.2.2:5000/api/products/${editableProduct.productid}`,
+        `http://10.0.3.2:5000/api/products/${editableProduct.productid}`,
         {
           method: "PUT",
           headers: {
@@ -111,7 +111,7 @@ function ManageProduct() {
   const performDeleteProduct = async (productId) => {
     try {
       const response = await fetch(
-        `http://10.0.2.2:5000/api/products/${productId}`,
+        `http://10.0.3.2:5000/api/products/${productId}`,
         {
           method: "DELETE",
           headers: {
