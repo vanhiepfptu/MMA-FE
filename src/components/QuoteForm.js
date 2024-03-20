@@ -10,6 +10,7 @@ import {
   View,
 } from "react-native";
 import { GET_ALL_QUOTAIOTIONS, backend_host } from "../constants/api";
+import { useIsFocused } from "@react-navigation/native";
 // import { ScrollView } from "react-native-web";
 
 const QuotationForm = ({ onSubmit }) => {
@@ -17,35 +18,51 @@ const QuotationForm = ({ onSubmit }) => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [userToken, setUserToken] = useState("");
+
   const ADMIN_TOKEN =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY5ODA1YTBkYzc5MDgzZjFhYmJkYTciLCJpYXQiOjE3MTA4NTAxMzh9.y8158XhPNg3jDPAZKpS8sw7k8fEBAy-fUQTnmXHR4-E";
+
   const STAFF_TOKEN =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY5N2FlZDZjNTk3MDQyNjdmN2JmMzIiLCJpYXQiOjE3MTA4NDg3NDl9.MrbIEIMRLLubryoHZgvTBGhQeC0L79ZSgtz1iWgZaVo";
+
   // const token =
   //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY0ODg3NjJjZjM2OGRiY2VhMjJjMTciLCJpYXQiOjE3MTA1MjQ1MzR9.lqlRkPu-XQ55taKNmZ9v0RIHqFjDuduPV5ty3G7A-Xo";
 
-  const [quotations, setQuotations] = useState([]);
   const url = GET_ALL_QUOTAIOTIONS;
+
+  const [quotations, setQuotations] = useState([]);
+
   const [notifications, setNotifications] = useState("");
+
+  const [token, setToken] = useState("");
+
   const getData = async () => {
     try {
       const response = await fetch(url);
       const json = await response.json();
       if (json) {
         setQuotations(json.data);
-        console.log(json.data);
       }
     } catch (err) {
       console.log(err);
     }
   };
+
   const getToken = async () => {
     const data = await AsyncStorage.getItem("Account");
-    return data?.account.tokens[0];
+    const parseData = JSON.parse(data);
+    console.log("Current TOKEN :", parseData.account.tokens[0]);
+    setToken(parseData.account.tokens[0]);
   };
+
+  const isFocus = useIsFocused();
+
   useEffect(() => {
-    getData();
-  }, []);
+    if (isFocus) {
+      getData();
+      getToken();
+    }
+  }, [isFocus]);
 
   const postQuotationData = async (data) => {
     const token =
@@ -57,7 +74,7 @@ const QuotationForm = ({ onSubmit }) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${get}`,
           },
           body: JSON.stringify({
             quotationIds: data.selectedItems,
@@ -70,7 +87,6 @@ const QuotationForm = ({ onSubmit }) => {
       }
 
       const jsonResponse = await response.json();
-      console.log(jsonResponse);
       // Thêm dòng này để thông báo gửi thành công
       console.log("Data has been successfully sent!");
       setNotifications(`Đã gửi thông tin cho đến ${data.email}`);
