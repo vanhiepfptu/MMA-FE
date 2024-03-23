@@ -134,6 +134,7 @@ const Blogs = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>INTERIOR BLOGS</Text>
+      <View className="mb-2" />
       {loading ? (
         <Loading />
       ) : (
@@ -161,7 +162,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#AB2330",
     textAlign: "center",
-    marginVertical: 20,
   },
   flatListContent: {
     paddingHorizontal: 16,

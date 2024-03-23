@@ -1,9 +1,9 @@
+import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import * as ImagePicker from "expo-image-picker";
 import React, { useEffect, useState } from "react";
 import {
   Alert,
-  Button,
   FlatList,
   Image,
   Modal,
@@ -18,6 +18,7 @@ import Card from "../components/Card";
 import { API_BLOG } from "../constants/api";
 import { firebase } from "../constants/firebase.configs";
 import Loading from "./../components/Loading";
+
 const API_URL = API_BLOG;
 const BlogScreen = ({ navigation }) => {
   const { top } = useSafeAreaInsets();
@@ -137,12 +138,32 @@ const BlogScreen = ({ navigation }) => {
   };
   return (
     <View style={styles.container}>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={() => setModalVisible(true)}
         style={styles.button}
       >
-        <Text style={styles.buttonText}>Add Blogs</Text>
+        <Text style={styles.buttonText}>
+          <Ionicons name="add-circle-outline" size={24} color="#3171d8" />
+        </Text>
+      </TouchableOpacity> */}
+      <TouchableOpacity
+        style={styles.addButton}
+        onPress={() => setModalVisible(true)}
+      >
+        <Ionicons name="add-circle-outline" size={34} color="#AB2330" />
       </TouchableOpacity>
+      <Text style={styles.title}>Blogs List</Text>
+      <View className="mb-2" />
+      {loading ? (
+        <Loading />
+      ) : (
+        <FlatList
+          data={news}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.blogsid.toString()}
+          className="px-4"
+        />
+      )}
       <Modal
         animationType="slide"
         transparent={true}
@@ -191,18 +212,6 @@ const BlogScreen = ({ navigation }) => {
           </View>
         </View>
       </Modal>
-      <Text style={styles.title}>Blogs List</Text>
-      <View className="mb-2" />
-      {loading ? (
-        <Loading />
-      ) : (
-        <FlatList
-          data={news}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.blogsid.toString()}
-          className="px-4"
-        />
-      )}
     </View>
   );
 };
@@ -289,4 +298,8 @@ const styles = StyleSheet.create({
   //   color: "#AB2330",
   //   fontSize: 16,
   // },
+  addButton: {
+    backgroundColor: "#F5BD02",
+    alignSelf: "center",
+  },
 });

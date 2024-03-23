@@ -349,6 +349,7 @@ export default function App() {
           <Stack.Screen
             name="AccountDetail"
             component={AccountDetail}
+            options={{ title: "Account" }}
           ></Stack.Screen>
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Báo giá chuẩn" component={UserScreen} />

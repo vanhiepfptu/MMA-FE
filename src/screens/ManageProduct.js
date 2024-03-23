@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from "react-native";
 import { host } from "../constants/api";
@@ -18,6 +19,8 @@ function ManageProduct() {
   const [editableProduct, setEditableProduct] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [deleteProductId, setDeleteProductId] = useState(null);
 
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY5N2FlZDZjNTk3MDQyNjdmN2JmMzIiLCJpYXQiOjE3MTA4NDg3NDl9.MrbIEIMRLLubryoHZgvTBGhQeC0L79ZSgtz1iWgZaVo";
@@ -98,16 +101,22 @@ function ManageProduct() {
     }
   };
 
-  const deleteProduct = (productid) => {
-    Alert.alert(
-      "Delete Product",
-      "Are you sure you want to delete this product?",
-      [
-        { text: "Cancel", style: "cancel" },
-        { text: "Delete", onPress: () => performDeleteProduct(productid) },
-      ]
-    );
+  // const deleteProduct = (productid) => {
+  //   Alert.alert(
+  //     "Delete Product",
+  //     "Are you sure you want to delete this product?",
+  //     [
+  //       { text: "Cancel", style: "cancel" },
+  //       { text: "Delete", onPress: () => performDeleteProduct(productid) },
+  //     ]
+  //   );
+  // };
+
+  const deleteProduct = (productId) => {
+    setDeleteProductId(productId);
+    setIsModalVisible(!isModalVisible);
   };
+
   const performDeleteProduct = async (productId) => {
     try {
       const response = await fetch(
@@ -126,6 +135,7 @@ function ManageProduct() {
       } else {
         alert("Failed to delete product. Status code: " + response.status);
       }
+      setDeleteProductId(null);
     } catch (error) {
       console.error(error);
     }
@@ -141,6 +151,7 @@ function ManageProduct() {
       <Button title="Edit" onPress={() => editProduct(item)} />
       <Button
         title="Delete"
+        // onPress={() => deleteProduct(item.productid)}
         onPress={() => deleteProduct(item.productid)}
         color="red"
       />
@@ -155,16 +166,16 @@ function ManageProduct() {
         keyExtractor={(item) => item.productid}
       />
 
-      <Modal
+      {/* <Modal
         visible={isEditModalVisible}
         onRequestClose={() => setEditModalVisible(false)}
       >
-        <View style={styles.modalContainer}>
-          <Text style={styles.big_title}>Edit Product</Text>
+        <View style={styles.editModalContainer}>
+          <Text style={styles.editModalTitle}>Edit Product</Text>
 
-          <Text style={styles.label}>Product Image</Text>
+          <Text style={styles.editModalLabel}>Product Image</Text>
           <TextInput
-            style={styles.input}
+            style={styles.editModalInput}
             value={editableProduct?.productImage.toString()}
             onChangeText={(text) =>
               setEditableProduct({ ...editableProduct, productImage: text })
@@ -172,9 +183,9 @@ function ManageProduct() {
             placeholder="Imagelink"
           />
 
-          <Text style={styles.label}>Product Price</Text>
+          <Text style={styles.editModalLabel}>Product Price</Text>
           <TextInput
-            style={styles.input}
+            style={styles.editModalInput}
             value={editableProduct?.productPrice.toString()}
             onChangeText={(text) =>
               setEditableProduct({ ...editableProduct, productPrice: text })
@@ -183,9 +194,9 @@ function ManageProduct() {
             keyboardType="numeric"
           />
 
-          <Text style={styles.label}>Product Type</Text>
+          <Text style={styles.editModalLabel}>Product Type</Text>
           <TextInput
-            style={styles.input}
+            style={styles.editModalInput}
             value={editableProduct?.productType}
             onChangeText={(text) =>
               setEditableProduct({ ...editableProduct, productType: text })
@@ -193,9 +204,9 @@ function ManageProduct() {
             placeholder="Product Type"
           />
 
-          <Text style={styles.label}>Product Quantity</Text>
+          <Text style={styles.editModalLabel}>Product Quantity</Text>
           <TextInput
-            style={styles.input}
+            style={styles.editModalInput}
             value={editableProduct?.productQuantity.toString()}
             onChangeText={(text) =>
               setEditableProduct({ ...editableProduct, productQuantity: text })
@@ -204,19 +215,131 @@ function ManageProduct() {
             keyboardType="numeric"
           />
 
-          <View style={styles.buttonContainer}>
+          <View style={styles.editModalButtonContainer}>
             <Button
               title="Cancel"
               onPress={() => setEditModalVisible(false)}
-              style={styles.saveButton}
+              style={styles.editModalActionButton}
               color="#D04848"
             />
             <Button
               title="Save"
               onPress={handleEditSubmit}
               color="#4CAF50"
-              style={styles.saveButton_2}
+              style={styles.editModalActionButton}
             />
+          </View>
+        </View>
+      </Modal> */}
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isEditModalVisible}
+        onRequestClose={() => {
+          setEditModalVisible(!isEditModalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalTitle}>Edit Product</Text>
+
+            <Text style={styles.modalText}>Product Image</Text>
+            <TextInput
+              style={styles.editModalInput}
+              value={editableProduct?.productImage.toString()}
+              onChangeText={(text) =>
+                setEditableProduct({ ...editableProduct, productImage: text })
+              }
+              placeholder="Image link"
+            />
+
+            <Text style={styles.modalText}>Product Price</Text>
+            <TextInput
+              style={styles.editModalInput}
+              value={editableProduct?.productPrice.toString()}
+              onChangeText={(text) =>
+                setEditableProduct({ ...editableProduct, productPrice: text })
+              }
+              placeholder="Product Price"
+              keyboardType="numeric"
+            />
+
+            <Text style={styles.modalText}>Product Type</Text>
+            <TextInput
+              style={styles.editModalInput}
+              value={editableProduct?.productType}
+              onChangeText={(text) =>
+                setEditableProduct({ ...editableProduct, productType: text })
+              }
+              placeholder="Product Type"
+            />
+
+            <Text style={styles.modalText}>Product Quantity</Text>
+            <TextInput
+              style={styles.editModalInput}
+              value={editableProduct?.productQuantity.toString()}
+              onChangeText={(text) =>
+                setEditableProduct({
+                  ...editableProduct,
+                  productQuantity: text,
+                })
+              }
+              placeholder="Product Quantity"
+              keyboardType="numeric"
+            />
+
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={[styles.button, styles.buttonUpdate]}
+                onPress={handleEditSubmit}
+              >
+                <Text style={styles.textStyle}>Save</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button, styles.buttonCancel]}
+                onPress={() => setEditModalVisible(false)}
+              >
+                <Text style={styles.textStyle}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      {/* DELETE MODAL */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={() => {
+          setIsModalVisible(!isModalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalTitle}>
+              You want to delete this account?
+            </Text>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => {
+                  performDeleteProduct(deleteProductId);
+                  setIsModalVisible(!isModalVisible);
+                }}
+              >
+                <Text style={styles.textStyle}>Delete</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button, styles.buttonCancel]}
+                onPress={() => {
+                  setIsModalVisible(!isModalVisible);
+                }}
+              >
+                <Text style={styles.textStyle}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </Modal>
@@ -225,7 +348,6 @@ function ManageProduct() {
 }
 
 const styles = StyleSheet.create({
-  // Add styles for input fields and modal container
   productContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -234,18 +356,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#FBE8A5",
   },
   productImage: {
-    width: 50, // Điều chỉnh kích thước phù hợp
-    height: 50, // Điều chỉnh kích thước phù hợp
-    marginRight: 10, // Thêm khoảng cách giữa hình ảnh và tên sản phẩm
+    width: 50,
+    height: 50,
+    marginRight: 10,
   },
-
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 10,
     borderRadius: 20,
   },
-
   productPrice: {
     color: "#AB2330",
     marginRight: 30,
@@ -253,15 +373,15 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: "300",
   },
-
   saveButton: {
-    marginRight: 20,
+    backgroundColor: "#4CAF50",
   },
-
+  cancelButton: {
+    backgroundColor: "#D04848",
+  },
   saveButton_2: {
     minWidth: "50px",
   },
-
   productName: {
     flex: 1,
   },
@@ -281,6 +401,14 @@ const styles = StyleSheet.create({
     padding: 20,
     borderWidth: 2,
     borderColor: "#F5BD02",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
   input: {
     height: 40,
@@ -316,6 +444,117 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     marginTop: 10,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "#FBE8A5",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginTop: 15,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+    width: 100,
+    marginHorizontal: 10,
+  },
+  buttonClose: {
+    backgroundColor: "#AB2330",
+  },
+  buttonCancel: {
+    backgroundColor: "#F5BD02",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
+    color: "#AB2330",
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "#FBE8A5",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalText: {
+    fontSize: 16,
+    textAlign: "center",
+    color: "#AB2330",
+  },
+  editModalInput: {
+    height: 40,
+    minWidth: "100%",
+    marginVertical: 8,
+    borderWidth: 1,
+    padding: 10,
+    backgroundColor: "#FBE8A5",
+    borderColor: "#AB2330",
+    borderRadius: 6,
+    color: "#AB2330",
+  },
+  button: {
+    backgroundColor: "#F5BD02",
+    padding: 12,
+    borderRadius: 20,
+    elevation: 2,
+    marginHorizontal: 5,
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  buttonCancel: {
+    backgroundColor: "#D04848",
+  },
+  buttonUpdate: {
+    backgroundColor: "#4CAF50",
+  },
+  modalTitle: {
+    fontWeight: "bold",
+    marginBottom: 15,
+    textAlign: "center",
+    color: "#AB2330",
+    fontSize: 30,
   },
 });
 

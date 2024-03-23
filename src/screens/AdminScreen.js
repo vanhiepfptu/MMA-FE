@@ -84,7 +84,8 @@ function AdminScreen() {
       }
 
       const data = await response.json();
-      setFetchData(data);
+      const newData = data.filter((item) => item.roleName !== "admin");
+      setFetchData(newData);
       return data;
     } catch (error) {
       console.error("There was a problem with your fetch operation:", error);
@@ -392,7 +393,6 @@ function AdminScreen() {
                 style={[styles.button, styles.buttonUpdate]}
                 onPress={() => {
                   updateAccount();
-
                   console.log("Updating account with: ", editFormData);
                   setIsEditModalVisible(!isEditModalVisible);
                 }}
@@ -658,5 +658,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
     fontSize: 18,
+    color: "#AB2330",
   },
 });

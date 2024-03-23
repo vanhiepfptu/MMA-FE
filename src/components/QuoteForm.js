@@ -65,8 +65,6 @@ const QuotationForm = ({ onSubmit }) => {
   }, [isFocus]);
 
   const postQuotationData = async (data) => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY0ODg3NjJjZjM2OGRiY2VhMjJjMTciLCJpYXQiOjE3MTA1MjQ1MzR9.lqlRkPu-XQ55taKNmZ9v0RIHqFjDuduPV5ty3G7A-Xo";
     try {
       const response = await fetch(
         `http://${backend_host}:5000/api/standard-quotations/calculate-quotation`,
@@ -74,7 +72,7 @@ const QuotationForm = ({ onSubmit }) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${get}`,
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             quotationIds: data.selectedItems,

@@ -1,9 +1,9 @@
+import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import * as ImagePicker from "expo-image-picker";
 import React, { useEffect, useState } from "react";
 import {
   Alert,
-  Button,
   FlatList,
   Image,
   Modal,
@@ -137,11 +137,17 @@ const NewsScreen = ({ navigation }) => {
   };
   return (
     <View style={styles.container}>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={() => setModalVisible(true)}
         style={styles.button}
       >
         <Text style={styles.buttonText}>Add News</Text>
+      </TouchableOpacity> */}
+      <TouchableOpacity
+        style={styles.addButton}
+        onPress={() => setModalVisible(true)}
+      >
+        <Ionicons name="add-circle-outline" size={34} color="#AB2330" />
       </TouchableOpacity>
       <Modal
         animationType="slide"
@@ -275,5 +281,9 @@ const styles = StyleSheet.create({
     elevation: 2,
     borderWidth: 1,
     borderColor: "#AB2330",
+  },
+  addButton: {
+    backgroundColor: "#F5BD02",
+    alignSelf: "center",
   },
 });
